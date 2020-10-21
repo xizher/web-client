@@ -78,35 +78,35 @@
               </v-col>
             </v-row>
           </v-container>
-          <!-- <v-container v-else key="create">
+          <v-container v-else key="create">
             <v-row no-gutters>
               <v-col>
                 <v-card ref="editBox" class="pa-5" outlined tile>
                   <v-row>
                     <v-col cols="12" sm="9">
-                      <v-text-field v-model="creationState.title" label="标题" outlined></v-text-field>
+                      <v-text-field v-model="itemOfCreate.title" label="标题" outlined></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="3">
-                      <v-btn :disabled="!submitCreationAbled" height="56" x-large block @click="submitCreation">上传</v-btn>
+                      <v-btn :disabled="!createEnabled" height="56" x-large block @click="createItem">上传</v-btn>
                     </v-col>
                   </v-row>
-                  <v-textarea label="概述" v-model="creationState.desc" auto-grow outlined rows="3" row-height="15"></v-textarea>
-                  <v-combobox v-model="creationState.sides" label="关键词" multiple chips outlined></v-combobox>
-                  <markdown-helper :mdContent.sync="creationState.content" mode="edit"></markdown-helper>
+                  <v-textarea label="概述" v-model="itemOfCreate.desc" auto-grow outlined rows="3" row-height="15"></v-textarea>
+                  <v-combobox v-model="itemOfCreate.sides" label="关键词" multiple chips outlined></v-combobox>
+                  <markdown-helper :mdContent.sync="itemOfCreate.content" mode="edit"></markdown-helper>
                 </v-card>
               </v-col>
               <v-col>
                 <v-card class="pa-5" outlined tile style="height: 100%">
-                  <markdown-helper :mdContent="creationState.content" mode="preview" height="100%"></markdown-helper>
+                  <markdown-helper :mdContent="itemOfCreate.content" mode="preview" height="100%"></markdown-helper>
                 </v-card>
               </v-col>
             </v-row>
-          </v-container> -->
+          </v-container>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="green darken-1" text @click="closeDialog">放弃编辑</v-btn>
-          <!-- <v-btn color="green darken-1" v-show="dialogType === 'update'" text @click="updateItem">保存编辑</v-btn> -->
+          <v-btn color="green darken-1" v-show="dialogType === DialogType.Update" text @click="updateItem">保存编辑</v-btn>
         </v-card-actions>
 
       </v-card>
@@ -115,7 +115,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, getCurrentInstance, reactive, toRef, toRefs, watch } from '@vue/composition-api'
+import { computed, ComputedRef, defineComponent, getCurrentInstance, reactive, ref, toRef, toRefs, watch } from '@vue/composition-api'
 import { Store } from 'vuex'
 import MarkdownHelper from '@/components/base/markdown/markdown-helper.vue'
 enum DialogType { Update, Create } // 博客更新、博客添加
@@ -137,8 +137,14 @@ interface ITableState {
   parseTime (time: any) : void // 时间格式化
 }
 interface IUpdatetionState {
-  itemOfUpdate: { id: any, content: any, description: any, sides: string[], title: any }
+  itemOfUpdate: { id: any, content: any, description: any, sides: string[], title: any, [key: string] : any }
   updateItem () : void
+}
+interface ICreationState {
+  itemOfCreate: { title: any, desc: any, sides: string[], content: any, [key: string]: any }
+  createEnabled: any
+  createItem () : void
+  resetItem () : void
 }
 export default defineComponent({
   name: 'BlogManager',
@@ -149,24 +155,6 @@ export default defineComponent({
     const $store = (getCurrentInstance() as any).$store as Store<any>
     const { axiosGet, axiosPost } = WXZ.Ajax
 
-    //#region 弹窗
-    const dialogState: IDialogState = reactive({
-      dialogVisible: false,
-      dialogType: DialogType.Update,
-      closeDialog () { dialogState.dialogVisible = false },
-      showDialog (item) {
-        if (item) {
-          dialogState.dialogType = DialogType.Update
-          // for (const key in updatetionState) {
-          //   updatetionState.itemOfUpdate[key] = item[key]
-          // }
-        } else {
-          dialogState.dialogType = DialogType.Create
-        }
-        dialogState.dialogVisible = true
-      },
-    })
-    //#endregion
 
     //#region 表格
     const tableState: ITableState =reactive({
@@ -209,7 +197,7 @@ export default defineComponent({
     //#region 更新
     const updatetionState: IUpdatetionState= reactive({
       itemOfUpdate: {
-        id: '', title: '', description: '', sides: [], content: '[TOC]\n## test'
+        id: '', title: '', description: '', sides: [], content: ''
       },
       updateItem() {
         $store.commit('setLoading', true)
@@ -222,11 +210,62 @@ export default defineComponent({
     })
     //#endregion
 
+    //#region 添加
+    const creationState: ICreationState = reactive({
+      itemOfCreate: {
+        title: '', desc: '', sides: [], content: '[[TOC]]\n'
+      },
+      createItem () {
+        $store.commit('setLoading', true)
+        axiosPost('/blog/add', { ...creationState.itemOfCreate }).finally(() => {
+          $store.dispatch('setLoading', false)
+          dialogState.closeDialog()
+          creationState.resetItem()
+          tableState.loadDatasource()
+        })
+      },
+      createEnabled: computed(() => {
+        for (const key in creationState.itemOfCreate) {
+          if (!creationState.itemOfCreate[key] || creationState.itemOfCreate.sides.length == 0) {
+            return false
+          }
+          return true
+        }
+      }),
+      resetItem () {
+        creationState.itemOfCreate.title = ''
+        creationState.itemOfCreate.desc = ''
+        creationState.itemOfCreate.sides.clear()
+        creationState.itemOfCreate.content = '[[TOC]]\n'
+      }
+    })
+    //#endregion
+
+    //#region 弹窗
+    const dialogState: IDialogState = reactive({
+      dialogVisible: false,
+      dialogType: DialogType.Update,
+      closeDialog () { dialogState.dialogVisible = false },
+      showDialog (item) {
+        if (item) {
+          dialogState.dialogType = DialogType.Update
+          for (const key in updatetionState.itemOfUpdate) {
+            updatetionState.itemOfUpdate[key] = item[key]
+          }
+        } else {
+          dialogState.dialogType = DialogType.Create
+        }
+        dialogState.dialogVisible = true
+      },
+    })
+    //#endregion
+    
     return {
       DialogType,
       ...toRefs(tableState as any),
       ...toRefs(dialogState as any),
       ...toRefs(updatetionState as any),
+      ...toRefs(creationState as any),
     }
   }
 })

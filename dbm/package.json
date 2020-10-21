@@ -9,6 +9,7 @@
   "dependencies": {
     "@kangc/v-md-editor": "^1.4.10",
     "@vue/composition-api": "^1.0.0-beta.17",
+    "codemirror": "^5.58.1",
     "compression-webpack-plugin": "^6.0.3",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
