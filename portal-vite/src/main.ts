@@ -1,4 +1,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import '@xizher/js-extension'
+import './assets/overload.scss'
+import router from './router'
 
-createApp(App).mount('#app')
+createApp(App)
+  .use(router)
+  .mount('#app')
