@@ -42,7 +42,7 @@ export default defineComponent({
     const appState: IAppState = reactive({
       miniVariant: false,
       nowTime: new Date(),
-      nowTimeFormat: computed(() => appState.nowTime.format('MM/DD hh:mm:ss')),
+      nowTimeFormat: computed(() => appState.nowTime.format('MM/dd hh:mm:ss')),
       isThemeDark: $vuetify.theme.dark
     })
     watchEffect(() => $vuetify.theme.dark = appState.isThemeDark)

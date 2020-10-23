@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import VueCompositionAPI from '@vue/composition-api'
 import vuetify from './config/vuetify.conf'
-import './extension'
+import '@xizher/js-extension'
 import './namespace'
 
 Vue.config.productionTip = false

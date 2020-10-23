@@ -1,5 +1,12 @@
 <template>
-  <v-md-editor :value="mdContent" @change="handleChange" :height="height" :mode="mode"></v-md-editor>
+  <v-md-editor
+    :value="mdContent"
+    @change="handleChange"
+    :height="height"
+    :mode="mode"
+    left-toolbar=""
+    right-toolbar="fullscreen"
+  ></v-md-editor>
 </template>
 
 <script>

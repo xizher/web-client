@@ -110,7 +110,7 @@
                       <v-text-field v-model="itemOfCreate.title" label="标题" outlined hide-details></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="3">
-                      <v-btn :disabled="!createEnabled" height="56" x-large block @click="createItem">上传</v-btn>
+                      <v-btn color="primary" :disabled="!createEnabled" height="56" x-large block @click="createItem">上传</v-btn>
                     </v-col>
                   </v-row>
                   <v-row>
@@ -151,34 +151,7 @@
 import { computed, ComputedRef, defineComponent, getCurrentInstance, reactive, ref, toRef, toRefs, watch } from '@vue/composition-api'
 import { Store } from 'vuex'
 import MarkdownHelper from '@/components/base/markdown/markdown-helper.vue'
-enum DialogType { Update, Create } // 博客更新、博客添加
-interface IDialogState {
-  dialogVisible: boolean // 弹窗可见状态
-  dialogType: DialogType // 弹窗显示内容
-  closeDialog () : void // 关闭弹窗
-  showDialog (item?: any) : void // 显示弹窗
-}
-interface ITableState {
-  tableHeader: Array<any> // 表头配置
-  tableLoading: Boolean // 表加载状态
-  tableExpanded: Array<any> // 表行下拉项
-  tableOptions: any // 表配置（分页...）
-  tableDataset: Array<any> // 表数据
-  tableTotal: number // 表数据条数
-  loadDatasource () : void // 表数据加载
-  setBlogVisible (val: any, id: any) : void // 设置可见性
-  parseTime (time: any) : void // 时间格式化
-}
-interface IUpdatetionState {
-  itemOfUpdate: { id: any, content: any, description: any, sides: string[], title: any, [key: string] : any }
-  updateItem () : void
-}
-interface ICreationState {
-  itemOfCreate: { title: any, desc: any, sides: string[], content: any, [key: string]: any }
-  createEnabled: any
-  createItem () : void
-  resetItem () : void
-}
+import { ITableState, DialogType, IUpdatetionState, ICreationState, IDialogState } from '@/interfaces'
 export default defineComponent({
   name: 'BlogManager',
   components: {
@@ -190,7 +163,7 @@ export default defineComponent({
 
 
     //#region 表格
-    const tableState: ITableState =reactive({
+    const tableState: ITableState = reactive({
       tableHeader: [
         { text: '', value: 'data-table-expand' },
         { text: '标识', sortable: false, value: 'id', width: 56 },
@@ -214,13 +187,13 @@ export default defineComponent({
           tableState.tableDataset.reset(...data.items)
         }).catch(err => console.warn(err)).finally(() => tableState.tableLoading = false)
       },
-      setBlogVisible (val, id) {
+      setBlogVisible (val: any, id: any) {
         tableState.tableLoading = true
         const visible = Boolean(val)
         axiosPost('/blog/set-visible', { id, visible }).then(tableState.loadDatasource)
       },
-      parseTime (time) {
-        return new Date(time).format('YYYY-MM-DD')
+      parseTime (time: any) {
+        return new Date(time).format('yyyy-MM-dd')
       },
     })
     watch(toRef(tableState, 'tableOptions'), tableState.loadDatasource, { deep: true })
