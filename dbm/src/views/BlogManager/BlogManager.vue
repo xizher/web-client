@@ -9,18 +9,21 @@
       :single-expand="true"
       :options.sync="tableOptions"
       :server-items-length="tableTotal"
-      :loading="tableLoading">
+      :loading="tableLoading"
+    >
       
+      <!-- 表头内容 -->
       <template v-slot:top>
         <v-toolbar flat>
           <v-toolbar-title>文章归档</v-toolbar-title>
-          <v-divider class="mx-4" inset vertical ></v-divider>
           <v-spacer></v-spacer>
           <v-btn color="primary" @click="showDialog()">添加</v-btn>
           <v-divider class="mx-4" inset vertical ></v-divider>
           <v-btn color="primary" @click="loadDatasource" fab small><v-icon>mdi-cached</v-icon></v-btn>
         </v-toolbar>
       </template>
+
+      <!-- 表列：时间 -->
       <template v-slot:[`item.time`]="{ item }">
         <v-tooltip right color="#000">
           <template v-slot:activator="{ on, attrs }">
@@ -36,62 +39,90 @@
           <span>最后编辑时间</span>
         </v-tooltip>
       </template>
+
+      <!-- 表列是否公开 -->
       <template v-slot:[`item.visible`]="{ item }">
           <v-switch :input-value="item.visible" @change="val => setBlogVisible(val, item.id)"></v-switch>
       </template>
+
+      <!-- 表元组展开项 -->
       <template v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length">
-          <div class="description">{{item.description}}</div>
-          <v-divider></v-divider>
-          <div class="sides"><v-chip v-for="(side, index) in item.sides" :key="index" :small="true">{{side}}</v-chip></div>
+          <div class="expanded-container">
+            <div class="description"><b>内容概述</b>：{{item.description}}</div>
+            <v-divider></v-divider>
+            <div class="sides"><b>关键词</b>：<v-chip v-for="(side, index) in item.sides" :key="index" :small="true">{{side}}</v-chip></div>
+          </div>
         </td>
       </template>
+
+      <!-- 表列：编辑 -->
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon small class="mr-2"  @click="showDialog(item)">
           mdi-pencil
         </v-icon>
       </template>
+
+      <!-- 表列：统计 -->
       <template v-slot:[`item.statis`]="{ item }">
         👁: {{item.view_count}} <br>
         ★: {{item.good_count}}
       </template>
+
     </v-data-table>
     
-    <v-dialog v-model="dialogVisible" persistent max-width="90vw" scrollable>
+    <v-dialog
+      v-model="dialogVisible"
+      persistent
+      max-width="90vw"
+      scrollable
+    >
       <v-card>
         <v-card-title class="headline">文档编辑</v-card-title>
+
         <v-card-text>
 
+          <!-- 文档更新· -->
           <v-container v-if="dialogType === DialogType.Update" key="update">
             <v-row>
               <v-col cols="12">
-                <v-text-field label="标题" v-model="itemOfUpdate.title" outlined></v-text-field>
+                <v-text-field label="标题" v-model="itemOfUpdate.title" outlined hide-details></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-textarea label="概述" v-model="itemOfUpdate.description" auto-grow outlined rows="1" row-height="15"></v-textarea>
+                <v-textarea label="概述" v-model="itemOfUpdate.description" auto-grow outlined rows="1" row-height="15" hide-details></v-textarea>
               </v-col>
               <v-col cols="12">
-                <v-combobox v-model="itemOfUpdate.sides" label="关键词" multiple chips outlined></v-combobox>
+                <v-combobox v-model="itemOfUpdate.sides" label="关键词" multiple chips outlined hide-details></v-combobox>
               </v-col>
               <v-col cols="12">
                 <markdown-helper :md-content.sync="itemOfUpdate.content"></markdown-helper>
               </v-col>
             </v-row>
           </v-container>
+
+          <!-- 文档新建 -->
           <v-container v-else key="create">
             <v-row no-gutters>
               <v-col>
                 <v-card ref="editBox" class="pa-5" outlined tile>
                   <v-row>
                     <v-col cols="12" sm="9">
-                      <v-text-field v-model="itemOfCreate.title" label="标题" outlined></v-text-field>
+                      <v-text-field v-model="itemOfCreate.title" label="标题" outlined hide-details></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="3">
                       <v-btn :disabled="!createEnabled" height="56" x-large block @click="createItem">上传</v-btn>
                     </v-col>
                   </v-row>
-                  <v-textarea label="概述" v-model="itemOfCreate.desc" auto-grow outlined rows="3" row-height="15"></v-textarea>
-                  <v-combobox v-model="itemOfCreate.sides" label="关键词" multiple chips outlined></v-combobox>
+                  <v-row>
+                    <v-col>
+                      <v-textarea label="概述" v-model="itemOfCreate.desc" auto-grow outlined rows="3" row-height="15" hide-details></v-textarea>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col>
+                      <v-combobox v-model="itemOfCreate.sides" label="关键词" multiple chips outlined hide-details></v-combobox>
+                    </v-col>
+                  </v-row>
                   <markdown-helper :mdContent.sync="itemOfCreate.content" mode="edit"></markdown-helper>
                 </v-card>
               </v-col>
@@ -102,7 +133,9 @@
               </v-col>
             </v-row>
           </v-container>
+
         </v-card-text>
+
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="green darken-1" text @click="closeDialog">放弃编辑</v-btn>
@@ -272,9 +305,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.expanded-container {
+  margin: 10px 15px;
+}
 .description, .sides {
   padding: 5px;
-  font-size: 0.9em;
+  font-size: 1.2em;
 }
 .sides > * {
   margin: 0 5px;
