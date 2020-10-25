@@ -17,6 +17,10 @@ const routes: Array<RouteConfig> = [
     path: '/nav-manager',
     name: 'NavManager',
     component: () => import('../views/NavManager')
+  }, {
+    path: '/pwd-manager',
+    name: 'PwdManager',
+    component: () => import('../views/PwdManager')
   }
 ]
 

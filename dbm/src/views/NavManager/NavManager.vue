@@ -130,7 +130,6 @@ export default defineComponent({
         }).catch(err => console.warn(err)).finally(() => tableState.tableLoading = false)
       },
       updateNav (item: any) {
-        console.log(item)
         $store.commit('setLoading', true)
         axiosPost('/nav/update', { ...item }).finally(() => {
           $store.dispatch('setLoading', false)

@@ -22,7 +22,7 @@ export enum DialogType {
 
 export interface IDialogState {
   dialogVisible: Boolean // 弹窗可见状态
-  dialogType: DialogType // 弹窗显示内容
+  dialogType?: DialogType // 弹窗显示内容
   closeDialog () : void // 关闭弹窗
   showDialog (item?: any) : void // 显示弹窗
 }
@@ -38,4 +38,9 @@ export interface ICreationState {
 export interface IUpdatetionState {
   itemOfUpdate: { [key: string]: any }
   updateItem () : void
+}
+
+export interface IFocuState {
+  focuItemId: number,
+  
 }
