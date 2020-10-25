@@ -6,6 +6,7 @@
         <v-toolbar-title>Ngheizit's DBM Application</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-switch v-model="isThemeDark" hide-details></v-switch>
+        <weather-box></weather-box>
       </v-app-bar>
       <!-- <side-menu :mini-variant="miniVariant"></side-menu> -->
       <!-- <app-side-menu></app-side-menu> -->
@@ -25,6 +26,7 @@
 import { computed, ComputedRef, defineComponent, getCurrentInstance, onUnmounted, reactive, toRefs, watchEffect } from '@vue/composition-api';
 import AppSideMenu from './components/menu/app-side-menu'
 import AppSideMenu2 from './components/menu/app-side-menu2.vue'
+import WeatherBox from './components/weather-box/weather-box.vue'
 interface IAppState {
   miniVariant: boolean // 侧边栏开关
   nowTime: Date // 当前时间
@@ -36,6 +38,7 @@ export default defineComponent({
   components: {
     'app-side-menu': AppSideMenu,
     'app-side-menu2': AppSideMenu2,
+    'weather-box': WeatherBox,
   },
   setup () {
     const { $vuetify } = getCurrentInstance() as any
