@@ -60,7 +60,7 @@
           @mouseup="setDecryptDisable"
         >解码</v-btn>
         &nbsp;
-        <v-btn color="primary" small
+        <v-btn color="primary" small @dblclick="delItem(item.id)"
         >删除</v-btn>
       </template>
 
@@ -113,6 +113,8 @@ export default defineComponent({
   setup () {
     const $store = (getCurrentInstance() as any).$store as Store<any>
     const { axiosGet, axiosPost } = WXZ.Ajax
+    const { encrypto, decrypto } = WXZ.Crypto
+    
 
     //#region 表格
     const tableState: ITableState = reactive({
@@ -138,8 +140,8 @@ export default defineComponent({
       },
       parsePwd (pwd: string, id: number) {
         return (tableState as any).isDecrypt && id == (tableState as any).decryptItemId
-          ? 'mmm'
-          : `%${pwd.substring(0, 12)}.=`
+          ? decrypto(pwd)
+          : '●●●●●●●●●●●●●●●●'
       },
       isDecrypt: false, // 
       decryptItemId: -1, // 
@@ -170,6 +172,7 @@ export default defineComponent({
       createItem () {
         $store.commit('setLoading', true)
         let { name, pwd, bz } = creationState.itemOfCreate
+        pwd = encrypto(pwd)
         axiosPost('/pwd/add', { name, pwd, bz }).finally(() => {
           $store.dispatch('setLoading', false)
           dialogState.closeDialog()
@@ -201,6 +204,9 @@ export default defineComponent({
     //#region 删除
     const delState: any = reactive({
       
+      delItem (id: number) {
+        console.log(id)
+      }
     })
     //#endregion
 
