@@ -112,7 +112,7 @@ export default defineComponent({
   name: 'PwdManager',
   setup () {
     const $store = (getCurrentInstance() as any).$store as Store<any>
-    const { axiosGet, axiosPost } = WXZ.Ajax
+    const { axiosGet, axiosPost, axiosPut, axiosDelete } = WXZ.Ajax
     const { encrypto, decrypto } = WXZ.Crypto
     
 
@@ -133,7 +133,7 @@ export default defineComponent({
         tableState.tableLoading = true
         const { page, itemsPerPage } = tableState.tableOptions as any
         const [limit, offset] = [itemsPerPage, (page - 1) * itemsPerPage]
-        axiosGet('/pwd/list', { limit, offset }).then(data => {
+        axiosGet('/pwd', limit == -1 && offset == 0 ? {} : { limit, offset }).then(data => {
           tableState.tableTotal = data.total
           tableState.tableDataset.reset(...data.items)
         }).catch(err => console.warn(err)).finally(() => tableState.tableLoading = false)
@@ -155,7 +155,7 @@ export default defineComponent({
       },
       updatePwd (item: any) {
         $store.commit('setLoading', true)
-        axiosPost('/pwd/update', { ...item }).finally(() => {
+        axiosPut('/pwd', { ...item }).finally(() => {
           $store.dispatch('setLoading', false)
           tableState.loadDatasource()
         })
@@ -173,7 +173,7 @@ export default defineComponent({
         $store.commit('setLoading', true)
         let { name, pwd, bz } = creationState.itemOfCreate
         pwd = encrypto(pwd)
-        axiosPost('/pwd/add', { name, pwd, bz }).finally(() => {
+        axiosPost('/pwd', { name, pwd, bz }).finally(() => {
           $store.dispatch('setLoading', false)
           dialogState.closeDialog()
           creationState.resetItem()

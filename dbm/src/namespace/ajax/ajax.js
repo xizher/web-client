@@ -30,5 +30,31 @@ WXZ.Ajax = class {
       return Promise.resolve(result)
     }
   }
+  
+  static async axiosPut (url, params, { localhost = true } = {}) {
+    const result = (await axios.put(localhost ?  `${SERVER_API}${url}` : url, params)).data;
+    if (localhost) {
+      if (result.code == 0) {
+        return Promise.resolve(result.data)
+      } else {
+        return Promise.reject(result.msg)
+      }
+    } else {
+      return Promise.resolve(result)
+    }
+  }
+  
+  static async axiosDelete (url, params, { localhost = true } = {}) {
+    const result = (await axios.delete(localhost ?  `${SERVER_API}${url}` : url, params)).data;
+    if (localhost) {
+      if (result.code == 0) {
+        return Promise.resolve(result.data)
+      } else {
+        return Promise.reject(result.msg)
+      }
+    } else {
+      return Promise.resolve(result)
+    }
+  }
 
 }
