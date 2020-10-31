@@ -8,7 +8,7 @@
       :single-expand="true"
       :options.sync="tableOptions"
       :server-items-length="tableTotal"
-      :loading="tableLoading"
+      :loading="loading"
     >
     
       <!-- 表头内容 -->
@@ -107,6 +107,7 @@
 import { ICreationState, IDialogState, ITableState } from '@/interfaces';
 import { computed, defineComponent, getCurrentInstance, reactive, toRef, toRefs, watch, watchEffect } from '@vue/composition-api';
 import { Store } from 'vuex';
+import { useAxios } from '@/hooks/useAjax'
 
 export default defineComponent({
   name: 'PwdManager',
@@ -114,6 +115,7 @@ export default defineComponent({
     const $store = (getCurrentInstance() as any).$store as Store<any>
     const { axiosGet, axiosPost, axiosPut, axiosDelete } = WXZ.Ajax
     const { encrypto, decrypto } = WXZ.Crypto
+    const { loading, doAxios } = useAxios()
     
 
     //#region 表格
@@ -130,13 +132,16 @@ export default defineComponent({
       tableDataset: [],
       tableTotal: 0,
       loadDatasource () {
-        tableState.tableLoading = true
         const { page, itemsPerPage } = tableState.tableOptions as any
         const [limit, offset] = [itemsPerPage, (page - 1) * itemsPerPage]
-        axiosGet('/pwd', limit == -1 && offset == 0 ? {} : { limit, offset }).then(data => {
+        // axiosGet('/pwd', limit == -1 && offset == 0 ? {} : { limit, offset }).then(data => {
+        //   tableState.tableTotal = data.total
+        //   tableState.tableDataset.reset(...data.items)
+        // }).catch(err => console.warn(err)).finally(() => tableState.tableLoading = false)
+        doAxios('get', '/pwd', limit == -1 && offset == 0 ? {} : { limit, offset }).then((data: any) => {
           tableState.tableTotal = data.total
           tableState.tableDataset.reset(...data.items)
-        }).catch(err => console.warn(err)).finally(() => tableState.tableLoading = false)
+        }).catch(err => console.warn(err))
       },
       parsePwd (pwd: string, id: number) {
         return (tableState as any).isDecrypt && id == (tableState as any).decryptItemId
@@ -215,6 +220,7 @@ export default defineComponent({
       ...toRefs(dialogState as any),
       ...toRefs(creationState as any),
       ...toRefs(delState as any),
+      loading,
     }
   }
 })
