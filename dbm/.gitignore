@@ -22,5 +22,6 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
+src/config/api.conf.ts
 src/config/api.conf.js
 src/config/key.conf.js
