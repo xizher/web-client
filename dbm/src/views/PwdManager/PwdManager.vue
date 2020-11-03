@@ -60,6 +60,9 @@
           @mouseup="setDecryptDisable"
         >解码</v-btn>
         &nbsp;
+        <v-btn color="primary" small
+        >复制</v-btn>
+        &nbsp;
         <v-btn color="primary" small @dblclick="delItem(item.id)"
         >删除</v-btn>
       </template>
@@ -69,11 +72,11 @@
     
     <v-dialog
       v-model="dialogVisible"
-      max-width="90vw"
+      max-width="50vw"
       scrollable
     >
       <v-card>
-        <v-card-title class="headline">文档编辑</v-card-title>
+        <v-card-title class="headline">添加</v-card-title>
 
         <v-card-text>
           <v-container >
@@ -87,7 +90,7 @@
             </v-row>
             <v-row>
               <v-col>
-                <v-textarea label="口令" v-model="itemOfCreate.pwd" auto-grow outlined rows="3" row-height="15" hide-details></v-textarea>
+                <v-text-field v-model="itemOfCreate.pwd" label="口令" type="password" outlined hide-details></v-text-field>
               </v-col>
             </v-row>
             <v-row>
@@ -113,7 +116,6 @@ export default defineComponent({
   name: 'PwdManager',
   setup () {
     const $store = (getCurrentInstance() as any).$store as Store<any>
-    const { axiosGet, axiosPost, axiosPut, axiosDelete } = WXZ.Ajax
     const { encrypto, decrypto } = WXZ.Crypto
     const { loading, doAxios } = useAxios()
     
@@ -160,7 +162,7 @@ export default defineComponent({
       },
       updatePwd (item: any) {
         $store.commit('setLoading', true)
-        axiosPut('/pwd', { ...item }).finally(() => {
+        doAxios('put', '/pwd', { ...item }).finally(() => {
           $store.dispatch('setLoading', false)
           tableState.loadDatasource()
         })
@@ -178,7 +180,7 @@ export default defineComponent({
         $store.commit('setLoading', true)
         let { name, pwd, bz } = creationState.itemOfCreate
         pwd = encrypto(pwd)
-        axiosPost('/pwd', { name, pwd, bz }).finally(() => {
+        doAxios('post', '/pwd', { name, pwd, bz }).finally(() => {
           $store.dispatch('setLoading', false)
           dialogState.closeDialog()
           creationState.resetItem()
@@ -210,7 +212,12 @@ export default defineComponent({
     const delState: any = reactive({
       
       delItem (id: number) {
-        console.log(id)
+        doAxios('delete', '/pwd', { id }).finally(() => {
+          $store.dispatch('setLoading', false)
+          dialogState.closeDialog()
+          creationState.resetItem()
+          tableState.loadDatasource()
+        })
       }
     })
     //#endregion

@@ -9,7 +9,7 @@
       :single-expand="true"
       :options.sync="tableOptions"
       :server-items-length="tableTotal"
-      :loading="tableLoading"
+      :loading="loading"
     >
       
       <!-- 表头内容 -->
@@ -152,6 +152,7 @@ import { computed, ComputedRef, defineComponent, getCurrentInstance, reactive, r
 import { Store } from 'vuex'
 import MarkdownHelper from '@/components/base/markdown/markdown-helper.vue'
 import { ITableState, DialogType, IUpdatetionState, ICreationState, IDialogState } from '@/interfaces'
+import { useAxios } from '@/hooks/useAjax'
 export default defineComponent({
   name: 'BlogManager',
   components: {
@@ -159,7 +160,7 @@ export default defineComponent({
   },
   setup () {
     const $store = (getCurrentInstance() as any).$store as Store<any>
-    const { axiosGet, axiosPost } = WXZ.Ajax
+    const { loading, doAxios } = useAxios()
 
 
     //#region 表格
@@ -179,21 +180,19 @@ export default defineComponent({
       tableDataset: [],
       tableTotal: 0,
       loadDatasource () {
-        tableState.tableLoading = true
         const { page, itemsPerPage } = tableState.tableOptions as any
         const [limit, offset] = [itemsPerPage, (page - 1) * itemsPerPage]
-        axiosGet('/blog/list', { limit, offset }).then(data => {
+        doAxios('get', '/blog/list', limit == -1 && offset == 0 ? {} : { limit, offset }).then(data => {
           tableState.tableTotal = data.total
           tableState.tableDataset.reset(...data.items)
-        }).catch(err => console.warn(err)).finally(() => tableState.tableLoading = false)
+        }).catch(err => console.warn(err))
       },
       setBlogVisible (val: any, id: any) {
-        tableState.tableLoading = true
         const visible = Boolean(val)
-        axiosPost('/blog/set-visible', { id, visible }).then(tableState.loadDatasource)
+        doAxios('post', '/blog/set-visible', { id, visible }).then(tableState.loadDatasource)
       },
       parseTime (time: any) {
-        return new Date(time).format('yyyy-MM-dd')
+        return new Date(Number(time)).format('yyyy-MM-dd')
       },
     })
     watch(toRef(tableState, 'tableOptions'), tableState.loadDatasource, { deep: true })
@@ -207,7 +206,7 @@ export default defineComponent({
       },
       updateItem() {
         $store.commit('setLoading', true)
-        axiosPost('/blog/update', { ...updatetionState.itemOfUpdate }).finally(() => {
+        doAxios('post', '/blog/update', { ...updatetionState.itemOfUpdate }).finally(() => {
           $store.dispatch('setLoading', false)
           dialogState.closeDialog()
           tableState.loadDatasource()
@@ -223,7 +222,7 @@ export default defineComponent({
       },
       createItem () {
         $store.commit('setLoading', true)
-        axiosPost('/blog/add', { ...creationState.itemOfCreate }).finally(() => {
+        doAxios('post', '/blog/add', { ...creationState.itemOfCreate }).finally(() => {
           $store.dispatch('setLoading', false)
           dialogState.closeDialog()
           creationState.resetItem()
@@ -272,6 +271,7 @@ export default defineComponent({
       ...toRefs(dialogState as any),
       ...toRefs(updatetionState as any),
       ...toRefs(creationState as any),
+      loading,
     }
   }
 })

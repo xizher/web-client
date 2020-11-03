@@ -6,7 +6,6 @@ export interface ITableState {
     width?: number
   }>
   tableExpanded?: Array<any>,
-  tableLoading: Boolean // 表加载状态
   tableOptions: any // 表配置（分页...）
   tableDataset: Array<any> // 表数据
   tableTotal: number // 表数据条数

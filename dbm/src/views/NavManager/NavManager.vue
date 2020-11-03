@@ -7,7 +7,7 @@
       item-key="id"
       :options.sync="tableOptions"
       :server-items-length="tableTotal"
-      :loading="tableLoading"
+      :loading="loading"
     >
       
       <!-- 表头内容 -->
@@ -98,40 +98,44 @@
 </template>
 
 <script lang="ts">
+import { useAxios } from '@/hooks/useAjax'
 import { DialogType, ICreationState, IDialogState, ITableState } from '@/interfaces'
 import { defineComponent, getCurrentInstance, reactive, toRefs, watch, toRef, computed } from '@vue/composition-api'
 import { Store } from 'vuex'
+
+interface ITableStateExt extends ITableState {
+  updateNav (item: any): void
+  getTypeUnion: any
+}
 
 export default defineComponent({
   name: 'NavManager',
   setup () {
     const $store = (getCurrentInstance() as any).$store as Store<any>
-    const { axiosGet, axiosPost } = WXZ.Ajax
+    const { loading, doAxios } = useAxios()
 
     //#region 表格
-    const tableState: ITableState = reactive({
+    const tableState: ITableStateExt = reactive({
       tableHeader: [
         { text: '标识', sortable: false, value: 'id' },
         { text: '名称', sortable: false, value: 'name' },
         { text: '类别', sortable: false, value: 'type' },
         { text: '地址', sortable: false, value: 'url' },
       ],
-      tableLoading: false,
       tableOptions: {},
       tableDataset: [],
       tableTotal: 0,
       loadDatasource () {
-        tableState.tableLoading = true
         const { page, itemsPerPage } = tableState.tableOptions
         const [limit, offset] = [itemsPerPage, (page - 1) * itemsPerPage]
-        axiosGet('/nav/list', { limit, offset }).then(data => {
+        doAxios('get', '/nav', limit == -1 && offset == 0 ? {} : { limit, offset }).then(data => {
           tableState.tableDataset.reset(...data.items)
           tableState.tableTotal = data.total
-        }).catch(err => console.warn(err)).finally(() => tableState.tableLoading = false)
+        }).catch(err => console.warn(err))
       },
       updateNav (item: any) {
         $store.commit('setLoading', true)
-        axiosPost('/nav/update', { ...item }).finally(() => {
+        doAxios('put', '/nav', { ...item }).finally(() => {
           $store.dispatch('setLoading', false)
           tableState.loadDatasource()
         })
@@ -156,7 +160,7 @@ export default defineComponent({
       }),
       createItem () {
         $store.commit('setLoading', true)
-        axiosPost('/nav/add', { ...creationState.itemOfCreate }).finally(() => {
+        doAxios('post', '/nav', { ...creationState.itemOfCreate }).finally(() => {
           $store.dispatch('setLoading', false)
           dialogState.dialogVisible = false
           creationState.resetItem()
@@ -204,6 +208,7 @@ export default defineComponent({
       ...toRefs(dialogState as any),
       ...toRefs(creationState as any),
       ...toRefs(webFrameState as any),
+      loading,
     }
   }
 })
