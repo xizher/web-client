@@ -13,7 +13,7 @@ export function encrypto (val) {
   return encrypted.ciphertext.toString()
 }
 
-export function decrypt (val) {
+export function decrypto (val) {
   const key = CryptoJS.enc.Utf8.parse(STRING_CRYPTO_KEY)
   const iv = CryptoJS.enc.Utf8.parse(STRING_CRYPTO_IV)
   const encryptedHexStr = CryptoJS.enc.Hex.parse(val)

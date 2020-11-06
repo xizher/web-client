@@ -22,15 +22,21 @@ export function useTable (tableUrl) {
     tableDataset: [],
     tableTotal: 0,
     loadDataset () {
-      const { page, itemsPerPage } = tableState.tableOptions
+      const { page, itemsPerPage, sortBy, sortDesc } = tableState.tableOptions
       let [limit, offset] = [itemsPerPage, (page - 1) * itemsPerPage]
       if (itemsPerPage === -1) {
         limit = tableState.tableTotal
         offset = 0
-        console.log(limit, offset)
       }
+      const order = []
+      sortBy.forEach((field, index) => {
+        order.push({
+          field,
+          type: sortDesc[index] ? 'DESC' : 'ASC'
+        })
+      })
       doAxios({
-        method: 'get', url: tableUrl, data: { limit, offset }
+        method: 'get', url: tableUrl, data: { limit, offset, order }
       }).then(data => {
         tableState.tableTotal = data.total
         tableState.tableDataset.reset(...data.items)
@@ -41,7 +47,7 @@ export function useTable (tableUrl) {
   })
   watch(toRef(tableState, 'tableOptions'), tableState.loadDataset, { deep: true })
   return {
-    tableState,
+    tableState, doAxios
   }
 }
 
@@ -49,9 +55,9 @@ export function useDialog({ showHandler, closeHandler } = {}) {
   const dialogState = reactive({
     dialogVisible: false,
     dialogType: '',
-    showDialog (type) {
+    showDialog (type, options) {
       dialogState.dialogType = type || ''
-      if (showHandler?.() !== false) {
+      if (showHandler?.(options) !== false) {
         dialogState.dialogVisible = true
       }
     },
@@ -86,49 +92,4 @@ export function useForm(refName, formName, submitHandler) {
   return {
     formState
   }
-
-  // const formState = reactive({
-  //   formItems: formConfig,
-  //   sunmitEnabled: computed(() => {
-  //     for (const key in formState.formItems) {
-  //       const { required, value } = formState.formItems[key]
-  //       if (required) {
-  //         switch (typeof value) {
-  //         case 'string':
-  //           if (!value) {
-  //             return false
-  //           }
-  //           break
-  //         case 'object':
-  //           if (Array.isArray(value) && value.length === 0 ) {
-  //             return false
-  //           }
-  //           // no default
-  //         }
-  //       }
-  //     }
-  //     return true
-  //   }),
-  //   resetForm () {
-  //     for (const key in formState.formItems) {
-  //       const { value, defaultValue } = formState.formItems[key]
-  //       if (Array.isArray(value)) {
-  //         formState.formItems[key].value.clear()
-  //       } else {
-  //         formState.formItems[key].value = defaultValue
-  //       }
-  //     }
-  //   },
-  //   sumbitForm () {
-  //     const items = {}
-  //     for (const key in formState.formItems) {
-  //       items[key] = formState.formItems[key].value
-  //     }
-  //     submitHandler?.(items)
-  //   },
-  // })
-
-  // return {
-  //   formState
-  // }
 }

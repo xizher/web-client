@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@vue/composition-api": "^1.0.0-beta.19",
-    "@xizher/js-extension": "^1.2.0",
+    "@xizher/js-extension": "^1.2.1",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
