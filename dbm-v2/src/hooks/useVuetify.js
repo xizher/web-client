@@ -1,6 +1,7 @@
 import { getCurrentInstance, reactive, ref, toRef, watch } from '@vue/composition-api'
 import { useAxios } from '../hooks/useAjax'
 import appConf from '../config/app.conf'
+import { isUrl } from '../utils'
 
 export function useTheme (theme) {
   const { $vuetify } = getCurrentInstance()
@@ -74,8 +75,12 @@ export function useDialog({ showHandler, closeHandler } = {}) {
 
 export function useForm(refName, formName, submitHandler) {
   const { $refs } = getCurrentInstance()
+  const formConf = JSON.parse(JSON.stringify(appConf.formConf[formName])) // deep copy
+  Object.keys(formConf).forEach(key => {
+    formConf[key].rules = parseRules(formConf[key].rules)
+  })
   const formState = reactive({
-    formItems: appConf.formConf[formName],
+    formItems: formConf,
     validateForm: true,
     resetForm () {
       $refs[refName].reset()
@@ -92,4 +97,26 @@ export function useForm(refName, formName, submitHandler) {
   return {
     formState
   }
+}
+
+function parseRules (rulesStr) {
+  const rules = []
+  rulesStr.split(',').forEach(item => {
+    switch (item) {
+    case 'required':
+      rules.push(val => !!val || '必需')
+      break
+    case 'required-array':
+      rules.push(val => val.length > 0 || '必需')
+      break
+    case 'url':
+      rules.push(val => isUrl(val) || '地址格式不合法')
+      break
+    case 'email':
+
+      break
+    // no default
+    }
+  })
+  return rules
 }

@@ -14,12 +14,12 @@
       <!-- 表头内容 -->
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>口令归档</v-toolbar-title>
+          <v-toolbar-title>链接归档</v-toolbar-title>
           <v-divider class="mx-4" inset vertical ></v-divider>
           <v-spacer></v-spacer>
-          <v-btn color="primary" @click="showDialog('create')">添加</v-btn>
+          <v-btn @click="showDialog('create')">添加</v-btn>
           <v-divider class="mx-4" inset vertical ></v-divider>
-          <v-btn color="primary" @click="loadDataset" fab small><v-icon>mdi-cached</v-icon></v-btn>
+          <v-btn @click="loadDataset" fab small><v-icon>mdi-cached</v-icon></v-btn>
         </v-toolbar>
       </template>
 
@@ -87,6 +87,7 @@
       :width="dialogType === 'create' ? '800' : '90vw'"
       :persistent="dialogType === 'create'"
       max-width="90vw"
+      @click:outside="iframeUrl = ''"
       scrollable
     >
       <v-card>
