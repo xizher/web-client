@@ -68,7 +68,9 @@ export default {
     'md-helper': mdHelper
   },
   setup () {
-    const { tableState, doAxios } = useTable('/blog/list')
+    const { tableState, doAxios } = useTable('/blog', {
+      urlGet: '/list'
+    })
     const { dialogState } = useDialog()
     const { formState: formCreationState } = useForm('form-create', 'addBlog', data => {
       // todo

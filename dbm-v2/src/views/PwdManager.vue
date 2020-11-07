@@ -38,7 +38,7 @@
         &nbsp;
         <v-btn small @click="copyPwd(item.pwd)">复制</v-btn>
         &nbsp;
-        <v-btn small @dblclick="deletePwd(item.id)">删除</v-btn>
+        <v-btn small @dblclick="delDataItem(item.id)">删除</v-btn>
       </template>
 
     </v-data-table>
@@ -92,14 +92,13 @@ export default {
     'v-password': VPasswordInput
   },
   setup () {
-    const { tableState, doAxios } = useTable('/pwd')
+    const { tableState } = useTable('/pwd')
     const { dialogState } = useDialog()
     const { formState } = useForm('form-creation', 'addPwd', data => {
       data.pwd = encrypto(data.pwd)
-      doAxios({ method: 'post', url: '/pwd', data }).finally(() => {
+      tableState.addDataItem(data).finally(() => {
         dialogState.closeDialog()
         formState.resetForm()
-        tableState.loadDataset()
       })
     })
 
@@ -128,11 +127,6 @@ export default {
       },
       copyPwd (pwd) {
         return window.navigator.clipboard.writeText(decrypto(pwd))
-      },
-      deletePwd (id) {
-        doAxios({ method: 'delete', url: '/pwd', data: { id } }).finally(() => {
-          tableState.loadDataset()
-        })
       },
     }
   },

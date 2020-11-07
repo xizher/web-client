@@ -15,8 +15,10 @@ export function useTheme (theme) {
 
 export function useTable (tableUrl) {
   const { loading, doAxios } = useAxios()
+  const tableConf = appConf.tableConf[tableUrl]
+  const { urlGet, urlAdd, urlUpdate, urlDel } = tableConf.ajax
   const tableState = reactive({
-    tableHeader: appConf.tableConf[tableUrl],
+    tableHeader: tableConf.header,
     tableLoading: loading,
     tableExpanded: [],
     tableOptions: {},
@@ -37,13 +39,31 @@ export function useTable (tableUrl) {
         })
       })
       doAxios({
-        method: 'get', url: tableUrl, data: { limit, offset, order }
+        method: urlGet.method, url: `${tableUrl}${urlGet.path}`, data: { limit, offset, order }
       }).then(data => {
         tableState.tableTotal = data.total
         tableState.tableDataset.reset(...data.items)
       }).catch(err => {
         console.warn(err)
       })
+    },
+    async addDataItem (data) {
+      await doAxios({
+        method: urlAdd.method, url: `${tableUrl}${urlAdd.path}`, data
+      })
+      tableState.loadDataset()
+    },
+    async updateDataItem (data) {
+      await doAxios({
+        method: urlUpdate.method, url: `${tableUrl}${urlUpdate.path}`, data
+      })
+      tableState.loadDataset()
+    },
+    async delDataItem (id) {
+      await doAxios({
+        method: urlDel.method, url: `${tableUrl}${urlDel.path}`, data: { id }
+      })
+      tableState.loadDataset()
     }
   })
   watch(toRef(tableState, 'tableOptions'), tableState.loadDataset, { deep: true })

@@ -28,7 +28,7 @@
         <v-edit-dialog
           :return-value.sync="item.name"
           large
-          @save="updateNav({ id: item.id, name: item.name })"
+          @save="updateDataItem({ id: item.id, name: item.name })"
         >
           【{{ item.name }}】
           <template v-slot:input>
@@ -47,7 +47,7 @@
         <v-edit-dialog
           :return-value.sync="item.type"
           large
-          @save="updateNav({ id: item.id, type: item.type })">
+          @save="updateDataItem({ id: item.id, type: item.type })">
         <v-chip>{{ item.type }}</v-chip>
           <template v-slot:input>
             <v-combobox
@@ -65,7 +65,7 @@
         <v-switch
           v-model="item.visible"
           hide-details
-          @change="val => updateNav({ id: item.id, visible: val })"
+          @change="val => updateDataItem({ id: item.id, visible: val })"
         />
       </template>
 
@@ -76,7 +76,7 @@
 
       <!-- 表列：操作 -->
       <template v-slot:[`item.actions`]="{ item }">
-        <v-btn @dblclick="deleteNav(item.id)">删除</v-btn>
+        <v-btn @dblclick="delDataItem(item.id)">删除</v-btn>
       </template>
 
     </v-data-table>
@@ -128,16 +128,15 @@ import { useTable, useDialog, useForm } from '../hooks/useVuetify'
 export default {
   name: 'NavManager',
   setup () {
-    const { tableState, doAxios } = useTable('/nav')
+    const { tableState } = useTable('/nav')
     const { dialogState } = useDialog({
       showHandler: showDialogHandle,
       closeHandler: closeDialogHandler
     })
     const { formState } = useForm('form-creation', 'addNav', item => {
-      doAxios({ method: 'post', url: '/nav', data: item }).finally(() => {
+      tableState.addDataItem(item).finally(() => {
         dialogState.closeDialog()
         formState.resetForm()
-        tableState.loadDataset()
       })
     })
     const iframeUrl = ref('')
@@ -151,16 +150,6 @@ export default {
       ...toRefs(tableState),
       ...toRefs(dialogState),
       ...toRefs(formState),
-      updateNav (data) {
-        doAxios({ method: 'put', url: '/nav', data }).finally(() => {
-          tableState.loadDataset()
-        })
-      },
-      deleteNav (id) {
-        doAxios({ method: 'delete', url: '/nav', data: { id } }).finally(() => {
-          tableState.loadDataset()
-        })
-      },
       typeUnique: computed(() => tableState.tableDataset.propToArr('type').unique()),
       urlFormat (url) {
         return `${url.substring(0, 20)}......`
