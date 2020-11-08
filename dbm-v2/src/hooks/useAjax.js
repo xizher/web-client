@@ -1,13 +1,14 @@
-import { ref } from '@vue/composition-api'
-import { SERVER_API } from '@/config/api.conf'
+import { getCurrentInstance, ref } from '@vue/composition-api'
 
 export function useAxios () {
+  const { $store } = getCurrentInstance()
+  const { serverApi } = $store.state
   const loading = ref(false)
   const doAxios = ({method, url, data, byServerApi = true} = {}) => {
     return new Promise((resolve, reject) => {
       loading.value = true
       let path = byServerApi
-        ? `${SERVER_API}${url}`
+        ? `${serverApi}${url}`
         : url
       path = method === 'delete'
         ? `${path}?id=${data.id}`
@@ -16,13 +17,14 @@ export function useAxios () {
         .then(({ data: result }) => {
           loading.value = false
           if (byServerApi) {
-            result.code === 0 ? resolve(result.data) : reject(result.msg)
+            result.code === '0x200' ? resolve(result.data) : reject(result.msg)
           } else {
             resolve(result)
           }
         })
         .catch(err => {
           loading.value = false
+          console.warn(err)
           reject(err)
         })
     })

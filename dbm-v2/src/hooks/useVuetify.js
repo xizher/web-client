@@ -103,7 +103,7 @@ export function useForm(refName, formName, submitHandler) {
     formItems: formConf,
     validateForm: true,
     resetForm () {
-      $refs[refName].reset()
+      $refs[refName]?.reset?.()
     },
     submitForm () {
       const items = {}
@@ -131,6 +131,9 @@ function parseRules (rulesStr) {
       break
     case 'url':
       rules.push(val => isUrl(val) || '地址格式不合法')
+      break
+    case 'number':
+      rules.push(val => !isNaN(val) || '仅数字')
       break
     case 'email':
 

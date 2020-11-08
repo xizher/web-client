@@ -4,7 +4,6 @@
       <v-app-bar-nav-icon @click="miniVariant = !miniVariant"></v-app-bar-nav-icon>
       <v-toolbar-title>{{ appConf.appInfo.name }}</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-switch v-model="isThemeDark" hide-details></v-switch>
       <span class="number-beauty">{{ weatherInfo }}</span>
     </v-app-bar>
     <v-navigation-drawer app clipped permanent :mini-variant="miniVariant">
@@ -32,20 +31,16 @@
 <script>
 import appConf from '@/config/app.conf.js'
 import { useNow } from '@/hooks/useDate'
-import { useTheme } from '@/hooks/useVuetify'
 import { useWeather } from '@/hooks/useApi'
 export default {
   name: 'App',
   setup () {
     const { dateFormat } = useNow('MM/dd hh:mm')
 
-    const { isThemeDark } = useTheme(appConf.theme)
-
     const { weatherInfo } = useWeather()
 
     return {
       dateFormat,
-      isThemeDark,
       weatherInfo,
     }
   },

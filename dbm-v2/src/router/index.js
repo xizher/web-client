@@ -21,6 +21,14 @@ const routes = [
     path: '/pwd-manager',
     name: 'PwdManager',
     component: () => import('@/views/PwdManager')
+  }, {
+    path: '/money-manager',
+    name: 'MoneyManager',
+    component: () => import('@/views/MoneyManager')
+  }, {
+    path: '/web-config',
+    name: 'WebConfig',
+    component: () => import('@/views/SystemConfig')
   }
 ]
 

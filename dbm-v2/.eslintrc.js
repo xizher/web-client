@@ -19,7 +19,8 @@ module.exports = {
   ],
   'globals': {
     'CryptoJS': 'readonly',
-    'axios': 'readonly'
+    'axios': 'readonly',
+    'waterfall': 'readonly',
   },
   'rules': {
     'semi': ['error', 'never'], // 行末不用分号
