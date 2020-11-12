@@ -48,7 +48,7 @@
           <v-switch
             hide-details
             :input-value="item.visible"
-            @change="val => updateDataItem({ id: item.id, visible: item.visible })"
+            @change="val => updateDataItem({ id: item.id, visible: val })"
           />
       </template>
 

@@ -4,4 +4,7 @@ module.exports = {
   alias: {
     '/@/': path.resolve(__dirname, './src')
   },
+  optimizeDeps: {
+    include: ['@xizher/js-extension/utils']
+  },
 }

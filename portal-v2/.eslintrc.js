@@ -12,11 +12,14 @@ module.exports = {
   ],
   'parserOptions': {
     'ecmaVersion': 12,
-    'sourceType': 'module'
+    'sourceType': 'module',
+
   },
   'plugins': [
-    'vue'
+    'vue',
+    'typescript'
   ],
+  // 'parser': 'typescript-eslint-parser',
   'globals': {
     '__dirname': 'readonly',
     'axios': 'readonly',
