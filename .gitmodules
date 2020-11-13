@@ -1,3 +1,7 @@
 [submodule "dbm-v2/src/utils/js-utils"]
 	path = dbm-v2/src/utils/js-utils
 	url = https://github.com/xizher/js-utils.git
+	
+[submodule "portal-v2/src/ext"]
+	path = portal-v2/src/ext
+	url = https://github.com/xizher/ext.git
