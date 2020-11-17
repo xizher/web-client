@@ -8,7 +8,6 @@ module.exports = {
     include: [
       '@kangc/v-md-editor',
       '@kangc/v-md-editor/lib/theme/vuepress',
-      '@kangc/v-md-editor/lib'
     ]
   },
 }
