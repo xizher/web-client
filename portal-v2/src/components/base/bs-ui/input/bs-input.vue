@@ -7,7 +7,7 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { guid } from '@xizher/js-extension/utils'
+import { guid } from '../../../../ext/js.utils'
 export default defineComponent({
   name: 'BsInput',
   props: {

@@ -1,10 +1,9 @@
 <template>
-  <!-- <bs-navbar
+  <bs-navbar
     :title="title"
-  ></bs-navbar> -->
-
-  <bs-input v-model="text"></bs-input>
-  {{text}}
+    :navItems="navItems"
+  />
+  <router-view />
 </template>
 
 <script>
@@ -18,14 +17,16 @@ export default {
     'bs-input': BsInput,
     'bs-navbar': BsNavbar,
   },
-  data () {
+  setup () {
+
     return {
       title: 'Ngheizit',
-      text: ''
+      navItems: [
+        { name: '作品集', to: '/' },
+        { name: '文章', to: '/blog' },
+        { name: '关于', to: '/about' },
+      ]
     }
   },
-  mounted () {
-    // console.log(getRootPath())
-  }
 }
 </script>

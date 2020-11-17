@@ -5,6 +5,10 @@ module.exports = {
     '/@/': path.resolve(__dirname, './src')
   },
   optimizeDeps: {
-    include: ['@xizher/js-extension/utils']
+    include: [
+      '@kangc/v-md-editor',
+      '@kangc/v-md-editor/lib/theme/vuepress',
+      '@kangc/v-md-editor/lib'
+    ]
   },
 }
