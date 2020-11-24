@@ -4,7 +4,9 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import './plugins/vueCompositionApi'
-import '@xizher/js-extension'
+import './plugins/crypto'
+import './ext/js.ext'
+
 
 Vue.config.productionTip = false
 

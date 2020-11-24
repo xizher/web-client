@@ -84,7 +84,7 @@
 <script>
 import { reactive, toRefs } from '@vue/composition-api'
 import { useTable, useDialog, useForm } from '../hooks/useVuetify'
-import { encrypto, decrypto } from '../utils'
+import { enCrypto, deCrypto } from '../ext/js.utils'
 import VPasswordInput from '@/components/ext/vuetify.ext/VPasswordInput'
 export default {
   name: 'PwdManager',
@@ -95,7 +95,7 @@ export default {
     const { tableState } = useTable('/pwd')
     const { dialogState } = useDialog()
     const { formState } = useForm('form-creation', 'addPwd', data => {
-      data.pwd = encrypto(data.pwd)
+      data.pwd = enCrypto(data.pwd)
       tableState.addDataItem(data).finally(() => {
         dialogState.closeDialog()
         formState.resetForm()
@@ -122,11 +122,11 @@ export default {
       ...toRefs(cryptoState),
       parsePwd (pwd, id) {
         return cryptoState.decryptEnable && id === cryptoState.decryptItemId
-          ? decrypto(pwd)
+          ? deCrypto(pwd)
           : '●●●●●●●●●●●●●●●●'
       },
       copyPwd (pwd) {
-        return window.navigator.clipboard.writeText(decrypto(pwd))
+        return window.navigator.clipboard.writeText(deCrypto(pwd))
       },
     }
   },

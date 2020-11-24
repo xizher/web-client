@@ -17,14 +17,14 @@ export function useAxios () {
         .then(({ data: result }) => {
           loading.value = false
           if (byServerApi) {
-            result.code === '0x200' ? resolve(result.data) : reject(result.msg)
+            result.code === '0x200' ? resolve(result.data) : reject(result)
           } else {
             resolve(result)
           }
         })
         .catch(err => {
           loading.value = false
-          console.warn(err)
+          console.log(err)
           reject(err)
         })
     })
