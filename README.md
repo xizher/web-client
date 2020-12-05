@@ -1,2 +1,19 @@
-# template-vue3-antd
-vue3 &amp; antd 项目模板
+# gis-geo
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

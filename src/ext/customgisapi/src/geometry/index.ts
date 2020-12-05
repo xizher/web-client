@@ -1,5 +1,0 @@
-export * from './extent'
-export * from './geometry'
-export * from './point'
-export * from './polyline'
-export * from './polygon'
