@@ -1,7 +1,6 @@
 import { ref } from 'vue'
 import axios from 'axios'
-// import { SERVER_API } from '@/config/api.conf'
-const SERVER_API = 'xxx'
+import { useConfig } from '../hooks/useAppConf'
 
 export function useAxios () {
   const loading = ref(false)
@@ -9,12 +8,13 @@ export function useAxios () {
     return new Promise((resolve, reject) => {
       method = method.toLocaleLowerCase()
       loading.value = true
-      let path = byServerApi ? `${SERVER_API}${url}` : url
+      const { ajaxConf } = useConfig()
+      let path = byServerApi ? `${ajaxConf.SERVER_API}${url}` : url
       path = (method === 'delete') ? `${path}?id=${data.id}` : path
       axios[method](path, method === 'get' ? { params: data } : data).then(({ data: result }) => {
         loading.value = false
         if (byServerApi) {
-          result.code === '0x200' ? resolve(result.data) : reject(result.msg)
+          result.err ? reject(result.info) : resolve(result.data)
         } else {
           resolve(result)
         }

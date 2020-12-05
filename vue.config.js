@@ -3,15 +3,24 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const productionGzipExtensions = ['js', 'css']
 const cdn = {
   css: [
-    // '//unpkg.com/vuetify@2.3.18/dist/vuetify.min.css'
+    'https://unpkg.com/ant-design-vue@2.0.0-rc.2/dist/antd.min.css'
   ],
   js: [
-    // '//unpkg.com/vue@2.6.11/dist/vue.min.js',
-    // '//unpkg.com/vue-router@3.2.0/dist/vue-router.min.js',
-    // '//unpkg.com/vuex@3.4.0/dist/vuex.min.js',
-    // '//unpkg.com/axios@0.21.0/dist/axios.min.js',
-    // '//unpkg.com/vuetify@2.3.18/dist/vuetify.min.js',
-    // '//unpkg.com/@vue/composition-api@1.0.0-beta.19/dist/vue-composition-api.prod.js',
+    'https://unpkg.com/vue@3.0.0/dist/vue.global.js',
+    'https://unpkg.com/vue-router@4.0.0-rc.6/dist/vue-router.global.js',
+    'https://unpkg.com/vuex@4.0.0-rc.2/dist/vuex.global.js',
+    'https://unpkg.com/axios@0.21.0/dist/axios.min.js',
+    'https://unpkg.com/ant-design-vue@2.0.0-rc.2/dist/antd.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/core.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/enc-base64.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/md5.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/evpkdf.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/cipher-core.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/aes.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/pad-pkcs7.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/mode-ecb.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/enc-utf8.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/enc-hex.min.js',
   ]
 }
 
@@ -34,13 +43,13 @@ module.exports = {
       })
     ],
     externals: {
-      // vue: 'Vue',
-      // 'vue-router': 'VueRouter',
-      // vuex: 'Vuex',
-      // axios: 'axios',
-      // '@vue/composition-api': 'VueCompositionAPI',
-      // vuetify: 'Vuetify',
-      // 'vuetify/dist/vuetify.min.css': 'Vuetify',
+      vue: 'Vue',
+      'vue-router': 'VueRouter',
+      vuex: 'Vuex',
+      axios: 'axios',
+      'ant-design-vue': 'antd',
+      'ant-design-vue/dist/antd.css': 'antd',
+      'crypto-js': 'CryptoJS'
     }
   },
   lintOnSave: false,
