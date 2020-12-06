@@ -25,8 +25,7 @@ router.beforeEach((to, from, next) => {
   if (path !== '/login') {
     const { doAxios } = useAxios()
     const { taken, oid } = JSON.parse(getCookie('accountInfo') || '{}')
-    doAxios({ url: '/account/check', data: { taken, oid } }).then(res => {
-      console.log(res)
+    doAxios({ url: '/account/check', data: { taken, oid } }).then(() => {
       next()
     }).catch(err => {
       console.warn(err)

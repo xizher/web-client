@@ -1,13 +1,18 @@
 import { createStore } from 'vuex'
-import appConf from '../config/app.conf'
 
 export default createStore({
   state: {
-    appConf
+    map: null
   },
   mutations: {
+    setMap (state, map) {
+      state.map = map
+    }
   },
   actions: {
+    setMap ({ commit }, map) {
+      commit('setMap', map)
+    }
   },
   modules: {
   }

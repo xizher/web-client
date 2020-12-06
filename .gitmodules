@@ -1,3 +1,6 @@
 [submodule "src/ext"]
 	path = src/ext
 	url = https://github.com/xizher/ext.git
+[submodule "src/map"]
+	path = src/map
+	url = https://github.com/xizher/map.git
