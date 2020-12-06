@@ -5,7 +5,8 @@
 <script>
 import { onMounted } from 'vue'
 import { } from 'vuex'
-import { WebMap } from '../../../map/leaflet'
+// import { WebMap } from '../../../map/leaflet'
+import { WebMap } from '../../../map/openlayers'
 import { useConfig } from '../../../hooks/useAppConf'
 export default {
   name: 'MapContainer',
