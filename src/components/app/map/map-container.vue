@@ -5,16 +5,16 @@
 <script>
 import { onMounted } from 'vue'
 import { } from 'vuex'
-// import { WebMap } from '../../../map/leaflet'
-import { WebMap } from '../../../map/openlayers'
+import { mapInit } from '../../../map/leaflet'
+// import { WebMap } from '../../../map/openlayers'
 import { useConfig } from '../../../hooks/useAppConf'
 export default {
   name: 'MapContainer',
   setup() {
-    const { mapConf } = useConfig()
-    const webMap = new WebMap('map-container', mapConf)
-    window.webMap = webMap
-    onMounted(webMap.initMap)
+    const { mapConfig } = useConfig()
+    onMounted(() => {
+      mapInit('map-container', mapConfig)
+    })
     return {
 
     }
