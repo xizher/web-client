@@ -6,6 +6,7 @@ import router from './router'
 import store from './store'
 import './plugins/crypto.plugins'
 import './plugins/app.conf.plugins'
+import './ext/js.ext'
 
 createApp(App)
   .use(store)

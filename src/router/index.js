@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { useAxios } from '../hooks/useAjax'
-import { getCookie, delCookie } from '../ext/js.utils'
+import { getCookie, delCookie, setCookie } from '../ext/js.utils'
 
 const routes = [
   {
@@ -26,6 +26,7 @@ router.beforeEach((to, from, next) => {
     const { doAxios } = useAxios()
     const { taken, oid } = JSON.parse(getCookie('accountInfo') || '{}')
     doAxios({ url: '/account/check', data: { taken, oid } }).then(() => {
+      setCookie('accountInfo', getCookie('accountInfo'))
       next()
     }).catch(err => {
       console.warn(err)

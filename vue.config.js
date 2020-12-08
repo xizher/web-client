@@ -69,5 +69,16 @@ module.exports = {
       chunks: ['chunk-vendors', 'chunk-common', 'index'],
       cdn: cdn
     }
-  }
+  },
+  devServer: {
+    // host: '127.0.0.1',
+    historyApiFallback: true,
+    noInfo: true,
+    overlay: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    },
+    hotOnly: false,
+    disableHostCheck: true
+  },
 }
