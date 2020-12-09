@@ -1,0 +1,18 @@
+body {
+  background-image: url(../../img/map-background.png);
+}
+
+
+.footer-container {
+  height: 250px;
+  width: 100vw;
+  position: fixed;
+  z-index: 999;
+  bottom: 0;
+  background: {
+    image: url(../../img/footer_background.png);
+    size: 150% 100%;
+    repeat: repeat-x;
+    position: center;
+  }
+}

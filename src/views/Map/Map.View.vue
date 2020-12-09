@@ -1,6 +1,9 @@
 <template>
   <div class="appview-map">
     <MapContainer />
+    <div class="footer-container">
+
+    </div>
   </div>
 </template>
 
