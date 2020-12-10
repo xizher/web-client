@@ -1,22 +1,37 @@
 <template>
-  <div id="map-container" class="map-container"></div>
+  <div class="map-container">
+    <div id="map-container" class="map-container"></div>
+    <div v-if="loaded">
+      <MapBasemap />
+      <MapTools />
+    </div>
+  </div>
 </template>
 
 <script>
 import { onMounted } from 'vue'
 import { } from 'vuex'
-import { mapInit } from '../../../map/leaflet'
+import { WebMap } from '../../../map/leaflet'
 // import { WebMap } from '../../../map/openlayers'
 import { useConfig } from '../../../hooks/useAppConf'
+import MapBasemap from './map-basemap'
+import MapTools from './map-tools'
 export default {
   name: 'MapContainer',
+  components: {
+    MapBasemap,
+    MapTools
+  },
   setup() {
     const { mapConfig } = useConfig()
+    const webMap = new WebMap('map-container', mapConfig)
+    window.webMap = webMap
+    const { loaded } = webMap.useHooks()
     onMounted(() => {
-      mapInit('map-container', mapConfig)
+      webMap.initMap()
     })
     return {
-
+      loaded,
     }
   }
 }

@@ -12,13 +12,16 @@ module.exports = {
   ],
   'parserOptions': {
     'ecmaVersion': 12,
-    'sourceType': 'module'
+    'sourceType': 'module',
+    'ecmaFeature': {
+      jsx: true
+    }
   },
   'plugins': [
     'vue'
   ],
   'globals': {
-    // 'xxx': 'readonly',
+    'webMap': 'readonly',
   },
   'rules': {
     'semi': ['error', 'never'], // 行末不用分号
@@ -42,5 +45,6 @@ module.exports = {
     // 'pace-before-function-paren': 'error', // 函数圆括号之前有一个空格
     'space-infix-ops': 'error', // 操作符周围有空格
     'no-var': 'error',
+    'no-unused-vars': 'error'
   }
 }

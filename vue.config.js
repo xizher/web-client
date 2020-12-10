@@ -25,6 +25,7 @@ const cdn = {
     './libs/crypto/enc-hex.min.js',
     './libs/openlayers/ol.js',
     './libs/leaflet/leaflet.js',
+    'https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js',
   ]
 }
 
@@ -57,6 +58,7 @@ module.exports = {
       'ol': 'ol',
       'leaflet': 'L',
       'leaflet/dist/leaflet.css': 'L',
+      // 'esri-leaflet': 'L.esri'
     }
   },
   lintOnSave: false,
