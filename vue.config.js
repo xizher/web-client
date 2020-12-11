@@ -58,7 +58,6 @@ module.exports = {
       'ol': 'ol',
       'leaflet': 'L',
       'leaflet/dist/leaflet.css': 'L',
-      // 'esri-leaflet': 'L.esri'
     }
   },
   lintOnSave: false,

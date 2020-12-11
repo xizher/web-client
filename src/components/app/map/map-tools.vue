@@ -32,7 +32,7 @@ export default {
 .map-tools {
   position: absolute;
   bottom: 16px;
-  right: 16px;
+  left: 16px;
   z-index: 999;
 }
 </style>
