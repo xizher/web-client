@@ -1,14 +1,19 @@
-# web-client
+# gis-glc30
 
-## - git commit type
+## Project setup
+```
+npm install
+```
 
-> <type>: <body>
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
-- feat: 新功能
-- fix: 修复bug
-- docs: 文档
-- style: 格式（不影响代码运行的变动）
-- refactor: 重构
-- test: 增加测试
-- chore: 构建过程或辅助工具的变动
+### Compiles and minifies for production
+```
+npm run build
+```
 
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
