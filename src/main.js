@@ -1,6 +1,10 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-// import './index.css'
+import './assets/styles/layout/layout.min.css'
+import './assets/styles/overwrite/overwrite.min.css'
+import { loadArcGISJsApiModules } from './map'
 
-createApp(App)
-  .mount('#app')
+loadArcGISJsApiModules().then(() => {
+  createApp(App)
+    .mount('#app')
+})

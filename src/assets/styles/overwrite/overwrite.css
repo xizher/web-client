@@ -1,0 +1,14 @@
+@charset "UTF-8";
+body, html {
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/*去除mapview拖动时的边框*/
+.esri-view .esri-view-surface--inset-outline:focus::after {
+  outline: auto 0px Highlight !important;
+  outline: auto 0px -webkit-focus-ring-color !important;
+}

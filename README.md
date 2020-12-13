@@ -229,3 +229,26 @@ ArcGIS API for JavaScript .d.ts 智能题型
 npm install --save-dev @types/arcgis-js-api
 ```
 
+## 2020年12月13日
+
+目标：vue-cli 转 vite
+
+### 一、git分支创建
+
+```bash
+git worktree add -b gis-glc30-vite ../gis-glc30-vite origin/gis-glc30-vite
+```
+
+### 二、添加子模块
+
+在src目录下执行
+
+```bash
+git submodule add https://github.com/xizher/map.git
+```
+
+```bash
+git submodule add https://github.com/xizher/ext.git
+```
+
+### 三、系统布局
