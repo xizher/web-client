@@ -1,37 +1,20 @@
 {
   "name": "gis-glc30",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.0.0",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "dev": "vite",
+    "build": "vite build"
   },
   "dependencies": {
-    "core-js": "^3.6.5",
-    "esri-loader": "^2.16.0",
-    "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0"
+    "vue": "^3.0.4"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.12.1",
-    "@types/arcgis-js-api": "^4.17.0",
-    "@typescript-eslint/eslint-plugin": "^4.9.1",
-    "@typescript-eslint/parser": "^4.9.1",
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-router": "~4.5.0",
-    "@vue/cli-plugin-typescript": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0",
+    "@vue/compiler-sfc": "^3.0.4",
     "compression-webpack-plugin": "^6.1.1",
     "eslint": "^7.15.0",
     "eslint-plugin-vue": "^7.2.0",
-    "node-sass": "^4.12.0",
-    "sass-loader": "^8.0.2",
-    "typescript": "^3.9.7"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "vite": "^1.0.0-rc.13",
+    "webpack": "^4.44.2"
+  }
 }

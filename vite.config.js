@@ -4,15 +4,15 @@ const productionGzipExtensions = ['js', 'css']
 
 const cdn = {
   css: [
-    
+
   ],
   js: [
     './libs/vue/vue.v3.0.0.js',
-    './libs/vue/vue-router.v4.0.0-rc.6.js',
   ]
 }
 
 module.exports = {
+  port: 8080,
   publicPath: './',
   productionSourceMap: false,
   assetsDir: 'static',
@@ -32,15 +32,14 @@ module.exports = {
     ],
     externals: {
       vue: 'Vue',
-      'vue-router': 'VueRouter',
-    }
+    },
   },
   lintOnSave: false,
   pages: {
     index: {
-      entry: 'src/main.ts',
-      template: 'public/index.html',
-      filename: 'index.html',
+      // entry: 'src/main.js',
+      // template: 'index.html',
+      // filename: 'index.html',
       title: 'GLC30辅助地理课堂教学系统',
       chunks: ['chunk-vendors', 'chunk-common', 'index'],
       cdn: cdn

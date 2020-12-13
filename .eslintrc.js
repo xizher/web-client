@@ -1,6 +1,5 @@
 module.exports = {
   'root': true,
-  'parser': '@typescript-eslint/parser',
   'env': {
     'browser': true,
     'commonjs': true,
@@ -9,7 +8,6 @@ module.exports = {
   'extends': [
     'eslint:recommended',
     'plugin:vue/vue3-recommended',
-    'plugin:@typescript-eslint/recommended',
     'plugin:vue/base', // to fix "Parsing error: Unexpected token <"
     // 'plugin:vue/essential'
   ],
