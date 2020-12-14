@@ -252,3 +252,19 @@ git submodule add https://github.com/xizher/ext.git
 ```
 
 ### 三、系统布局
+
+## 2020年12月14日
+
+### 一、系统界面设计
+
+css书写顺序
+
+1. 位置属性(position, top, right, z-index, display, float等)
+2. 大小(width, height, padding, margin)
+3. 文字系列(font, line-height, letter-spacing, color- text-align等)
+4. 背景(background, border等)
+5. 其他(animation, transition等)
+
+scss：`$` 、`&`、`@mixin`、`@include`、`@import`、嵌套
+
+![2020-12-14_203033](C:\wxz\git\xizher\web-client\gis-glc30-vite\README\images\2020-12-14_203033.png)

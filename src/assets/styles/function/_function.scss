@@ -1,0 +1,12 @@
+@mixin background-config($repeat, $position, $size) { // 背景布局配置
+  background: {
+    repeat: $repeat;
+    position: $position;
+    size: $size;
+  }
+}
+
+@mixin size-config($width, $height) { // 宽高配置
+  width: $width;
+  height: $height;
+}

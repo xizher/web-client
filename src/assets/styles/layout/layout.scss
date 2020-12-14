@@ -1,44 +1,130 @@
-.application-container {
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
+$color-bg: #F9F8E4;
+$color-red: #CB7954;
+$color-green: #648D7D;
+$color-dark: #594D34;
 
-
+@mixin background-config($repeat, $position, $size) { // 背景布局配置
   background: {
-    image: url(./images/background.jpg);
-    position: center;
-    size: cover;
+    repeat: $repeat;
+    position: $position;
+    size: $size;
   }
+}
+
+@mixin size-config($width, $height) { // 宽高配置
+  width: $width;
+  height: $height;
+}
+
+.application-container {
+  @include size-config(100vw, 100vw);
+  overflow: hidden;
+  background-color: $color-bg;
 }
 
 .header {
   position: absolute;
   top: 0;
-  right: 8px;
-  z-index: 1;
+  @include size-config(100%, 125px);
+  background-image: url(./images/header-title-panel.png);
+  @include background-config(no-repeat, center bottom, auto 99%);
 
-  height: 80px;
-  width: 441px;
-  background: {
-    image: url(./images/header.png);
-    position: center;
-    size: 100%;
-    repeat: no-repeat;
+  .header-bar {
+    position: absolute;
+    top: 18px;
+    @include size-config(calc(50% - 145px), 72px);
+
+    &::before {
+      content: ' ';
+      position: absolute;
+      top: 0px;
+      @include size-config(72px, 100%);
+      @include background-config(no-repeat, left, auto 100%);
+    }
+  }
+
+  .header-left-bar {
+    left: 85px;
+    background: linear-gradient(-103deg, transparent 17px, $color-red 0px) left top;
+
+    &::before {
+      left: -70px;
+      background-image: url(./images/header-panel-left.png);
+    }
+  }
+
+  .header-right-bar {
+    right: 85px;
+    background: linear-gradient(103deg, transparent 17px, $color-red 0px) left top;
+
+    &::before {
+      right: -70px;
+      background-image: url(./images/header-panel-right.png);
+    }
   }
 }
 
 .map-view-container {
-  height: 100vh;
-  width: 100vw;
-}
-
-.mouse-location-info {
   position: absolute;
-  bottom: 8px;
-  right: 8px;
-  color: white;
-  height: 28px;
-  line-height: 28px;
-  padding: 0 8px;
-  background-color: #73A4A3;
+  top: 125px;
+  @include size-config(calc(100% - 50px), calc(100% - 175px));
+  margin: 25px;
+
+  >:first-child {
+    height: 100%;
+    width: 100%;
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    z-index: 1;
+    @include size-config(calc(100% - 20px), calc(100% - 20px));
+    border: $color-dark 15px solid;
+    border-radius: 12px;
+    pointer-events: none;
+  }
+  
+  .map-bar {
+    position: absolute;
+    @include background-config(no-repeat, center, 100% 100%);
+    pointer-events: none;
+    * {
+      pointer-events: auto;
+    }
+  }
+
+  .map-top-left-bar {
+    top: -15px;
+    left: -17px;
+    z-index: 2;
+    @include size-config(172px, 172px);
+    background-image: url(./images/map-top-left-bar.png);
+  }
+
+  .map-top-right-bar {
+    top: -15px;
+    right: -17px;
+    @include size-config(172px, 172px);
+    z-index: 2;
+    background-image: url(./images/map-top-right-bar.png);
+  }
+
+  .map-bottom-right-bar {
+    bottom: -23px;
+    right: 23px;
+    z-index: 2;
+    @include size-config(228px, 112px);
+    background-image: url(./images/map-bottom-right-bar.png);
+  }
+
+  .map-bottom-left-bar {
+    bottom: 27px;
+    left: -22px;
+    z-index: 2;
+    @include size-config(400px, 62px);
+    background-image: url(./images/map-bottom-left-bar.png);
+  }
 }
