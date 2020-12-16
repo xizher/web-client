@@ -1,3 +1,9 @@
+$color-bg: #F9F8E4;
+$color-red: #CB7954;
+$color-green: #648D7D;
+$color-deep-green: #587C6E;
+$color-dark: #594D34;
+
 body, html {
   padding: 0;
   margin: 0;
@@ -12,4 +18,24 @@ body, html {
 .esri-view .esri-view-surface--inset-outline:focus::after {
   outline: auto 0px Highlight !important;
   outline: auto 0px -webkit-focus-ring-color !important;
+}
+
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  background-color: $color-deep-green;
+  color: white;
+}
+.ant-select-arrow {
+  color: white;
+}
+
+.ant-select-dropdown {
+  background-color: $color-green;
+}
+
+.ant-select-item {
+  color: white;
+}
+
+.ant-select-item-option-active {
+  color: $color-dark;
 }

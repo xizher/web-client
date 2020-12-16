@@ -12,3 +12,24 @@ body, html {
   outline: auto 0px Highlight !important;
   outline: auto 0px -webkit-focus-ring-color !important;
 }
+
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  background-color: #587C6E;
+  color: white;
+}
+
+.ant-select-arrow {
+  color: white;
+}
+
+.ant-select-dropdown {
+  background-color: #648D7D;
+}
+
+.ant-select-item {
+  color: white;
+}
+
+.ant-select-item-option-active {
+  color: #594D34;
+}

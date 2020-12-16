@@ -6,6 +6,7 @@
     "build": "vite build"
   },
   "dependencies": {
+    "ant-design-vue": "^2.0.0-rc.5",
     "esri-loader": "^2.16.0",
     "vue": "^3.0.4"
   },

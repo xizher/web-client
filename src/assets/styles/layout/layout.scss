@@ -17,9 +17,15 @@ $color-dark: #594D34;
 }
 
 .application-container {
-  @include size-config(100vw, 100vw);
+  @include size-config(100vw, 100vh);
   overflow: hidden;
   background-color: $color-bg;
+}
+
+.content {
+  margin-top: 125px;
+  @include size-config(auto, calc(100% - 145px));
+  display: flex;
 }
 
 .header {
@@ -64,15 +70,42 @@ $color-dark: #594D34;
   }
 }
 
-.map-view-container {
+.main {
+  position: relative;
+  flex: 3;
+}
+
+.side {
+  position: relative;
+  margin: 20px 0 20px 5px;
+  height: calc(100% - 20px);
+  flex: 1;
+  border: $color-dark 15px solid;
+  border-radius: 12px;
+  .side-title {
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    @include size-config(80%, 59px);
+    max-width: 273px;
+    @include background-config(no-repeat, center, 100% 100%);
+    background-image: url(./images/side-panel-title.png);
+  }
+  .side-content {
+    padding: 30px 8px 0 8px;
+    height: 100%;
+    overflow: auto;
+  }
+}
+
+.map-panel {
   position: absolute;
-  top: 125px;
-  @include size-config(calc(100% - 50px), calc(100% - 175px));
   margin: 25px;
+  @include size-config(calc(100% - 45px), calc(100% - 30px));
 
   >:first-child {
-    height: 100%;
-    width: 100%;
+    @include size-config(100%, 100%);
   }
   
   &::before {
@@ -81,7 +114,7 @@ $color-dark: #594D34;
     top: -5px;
     left: -5px;
     z-index: 1;
-    @include size-config(calc(100% - 20px), calc(100% - 20px));
+    @include size-config(calc(100% + 10px), calc(100% + 10px));
     border: $color-dark 15px solid;
     border-radius: 12px;
     pointer-events: none;
@@ -127,4 +160,22 @@ $color-dark: #594D34;
     @include size-config(400px, 62px);
     background-image: url(./images/map-bottom-left-bar.png);
   }
+}
+
+.side-panel-switch {
+  position: absolute;
+  top: 50%;
+  left: 9px;
+  transform: translateY(-50%);
+  @include size-config(35px, 70px);
+  @include background-config(no-repeat, center, 100% 100%);
+  cursor: pointer;
+}
+
+.side-panel-switch__closed {
+  background-image: url(./images/btn-open-side.png);
+}
+
+.side-panel-switch__opend {
+  background-image: url(./images/btn-close-side.png);
 }
