@@ -7,30 +7,32 @@
       </div>
     </div>
     <div class="content">
-      <div
-        v-if="sideVisible"
-        class="side"
-      >
-        <div class="side-title" />
-        <div class="side-content">
-          <a-select
-            style="width: 80%;"
-          >
-            <a-select-option value="jack">
-              自然地理环境的地域差异
-            </a-select-option>
-            <a-select-option value="lucy">
-              城市与城市化
-            </a-select-option>
-            <a-select-option value="Yiminghe">
-              区域生态环境建设
-            </a-select-option>
-            <a-select-option value="Yiminghe2">
-              区域自然资源的综合开发与利用
-            </a-select-option>
-          </a-select>
+      <transition name="fade">
+        <div
+          v-show="sideVisible"
+          class="side"
+        >
+          <div class="side-title" />
+          <div class="side-content">
+            <a-select
+              style="width: 80%;"
+            >
+              <a-select-option value="jack">
+                自然地理环境的地域差异
+              </a-select-option>
+              <a-select-option value="lucy">
+                城市与城市化
+              </a-select-option>
+              <a-select-option value="Yiminghe">
+                区域生态环境建设
+              </a-select-option>
+              <a-select-option value="Yiminghe2">
+                区域自然资源的综合开发与利用
+              </a-select-option>
+            </a-select>
+          </div>
         </div>
-      </div>
+      </transition>
       <div class="main">
         <div class="map-panel">
           <div id="map-view-container" />
@@ -82,6 +84,11 @@ export default {
 </script>
 
 <style scoped>
-
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 </style>
 
