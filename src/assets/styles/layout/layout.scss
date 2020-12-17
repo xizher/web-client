@@ -72,14 +72,14 @@ $color-dark: #594D34;
 
 .main {
   position: relative;
-  flex: 3;
+  flex: 1 1 auto;
 }
 
 .side {
   position: relative;
   margin: 20px 0 20px 5px;
   height: calc(100% - 20px);
-  flex: 1;
+  width: 400px;
   border: $color-dark 15px solid;
   border-radius: 12px;
   .side-title {
