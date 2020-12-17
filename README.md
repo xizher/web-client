@@ -268,3 +268,59 @@ css书写顺序
 scss：`$` 、`&`、`@mixin`、`@include`、`@import`、嵌套
 
 ![2020-12-14_203033](C:\wxz\git\xizher\web-client\gis-glc30-vite\README\images\2020-12-14_203033.png)
+
+## 2020年12月16日
+
+### 一、flex布局固定与自适应项的配置
+
+.sth-2固定400px宽度，.sth-1则自适应
+
+```scss
+.sth-1 {
+	flex: 1 1 auto;
+}
+.sth-2 {
+	width: 400px;
+}
+```
+
+.sth-1占四分之一空间，.sth-2占四分之三空间
+
+```scss
+.sth-1 {
+	flex: 1;
+}
+.sth-2 {
+	flex: 3;
+}
+```
+
+## 2020年12月17日
+
+### 一、类结构
+
+```js
+export class Xxx {
+	//#region 私有属性
+
+  //#endregion
+  
+	//#region 私有方法
+  
+  /** 初始化 */
+  #init () {
+
+  }
+  //#endregion
+  
+  constructor () {
+    
+    this.#init()
+  }
+
+	//#region 公有方法
+	
+  //#endregion
+}
+```
+

@@ -4,9 +4,9 @@ import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 import './assets/styles/layout/layout.scss'
 import './assets/styles/overwrite/overwrite.scss'
-import { loadArcGISJsApiModules } from './map'
+import { loadEsriModules } from './map'
 
-loadArcGISJsApiModules().then(() => {
+loadEsriModules().then(() => {
   createApp(App)
     .use(Antd)
     .mount('#app')

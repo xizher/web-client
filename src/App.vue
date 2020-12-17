@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { onMounted, ref, toRefs } from 'vue'
+import { onMounted, ref } from 'vue'
 import { WebMap } from './map/mapinit/mapinit'
 import { webMapOptions } from './config/app.conf'
 export default {
