@@ -67,16 +67,15 @@ export default {
   setup() {
 
     const webMap = new WebMap('map-view-container', webMapOptions)
-    const { mouseLocation } = webMap.useHooks()
+    window.webMap = webMap
 
     const sideVisible = ref(false)
 
     onMounted(() => {
-      webMap.init()
+      webMap.load()
     })
 
     return {
-      ...toRefs(mouseLocation),
       sideVisible
     }
   }

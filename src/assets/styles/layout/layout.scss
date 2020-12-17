@@ -1,20 +1,5 @@
-$color-bg: #F9F8E4;
-$color-red: #CB7954;
-$color-green: #648D7D;
-$color-dark: #594D34;
-
-@mixin background-config($repeat, $position, $size) { // 背景布局配置
-  background: {
-    repeat: $repeat;
-    position: $position;
-    size: $size;
-  }
-}
-
-@mixin size-config($width, $height) { // 宽高配置
-  width: $width;
-  height: $height;
-}
+@import '../constant/_constant';
+@import '../function/function';
 
 .application-container {
   @include size-config(100vw, 100vh);
