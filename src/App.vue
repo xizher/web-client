@@ -67,7 +67,7 @@
 
 <script>
 import { onMounted, ref } from 'vue'
-import { WebMap } from './map/mapinit/mapinit'
+import { WebMap } from './map/esri/mapinit/mapinit'
 import { webMapOptions } from './config/app.conf'
 import { Basemap, Hawkeye, Zoom } from './components/map'
 import { useMap } from './hooks/useMap'
