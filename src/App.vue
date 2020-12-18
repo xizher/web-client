@@ -36,11 +36,18 @@
       <div class="main">
         <div class="map-panel">
           <div id="map-view-container" />
-          <div class="map-top-left-bar map-bar" />
-          <div class="map-top-right-bar map-bar">
-            <!-- <button>
-          test
-        </button> -->
+          <div
+            v-if="loaded"
+            class="map-top-left-bar map-bar"
+          >
+            <Zoom />
+          </div>
+          <div
+            v-if="loaded"
+            class="map-top-right-bar map-bar"
+          >
+            <Basemap />
+            <Hawkeye />
           </div>
           <div class="map-bottom-left-bar map-bar" />
           <div class="map-bottom-right-bar map-bar" />
@@ -62,21 +69,32 @@
 import { onMounted, ref } from 'vue'
 import { WebMap } from './map/mapinit/mapinit'
 import { webMapOptions } from './config/app.conf'
+import { Basemap, Hawkeye, Zoom } from './components/map'
+import { useMap } from './hooks/useMap'
 export default {
   name: 'App',
+  components: {
+    Basemap,
+    Hawkeye,
+    Zoom,
+  },
   setup() {
+    const { setWebMap } = useMap()
 
     const webMap = new WebMap('map-view-container', webMapOptions)
+    setWebMap(webMap)
     window.webMap = webMap
 
     const sideVisible = ref(false)
+    const { loaded } = webMap.useHooks()
 
     onMounted(() => {
       webMap.load()
     })
 
     return {
-      sideVisible
+      sideVisible,
+      loaded
     }
   }
 }

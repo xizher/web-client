@@ -9,15 +9,18 @@ body, html {
 
 }
 
-
 /*去除mapview拖动时的边框*/
-.esri-view .esri-view-surface--inset-outline:focus::after {
-  outline: auto 0px Highlight !important;
-  outline: auto 0px -webkit-focus-ring-color !important;
+.esri-view :focus {
+  outline: none;
 }
+// .esri-view .esri-view-surface--inset-outline:focus::after {
+//   outline: auto 0px Highlight !important;
+//   outline: auto 0px -webkit-focus-ring-color !important;
+// }
 
 .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
   background-color: $color-deep-green;
+  border: 1px solid $color-green;
   color: white;
 }
 .ant-select-arrow {
@@ -35,3 +38,4 @@ body, html {
 .ant-select-item-option-active {
   color: $color-dark;
 }
+

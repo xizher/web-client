@@ -1,0 +1,36 @@
+// 菱形样式
+.diamond {
+  transform: rotate(45deg);
+  overflow: hidden;
+  display: inline-block;
+}
+
+.triangle-top-left {
+  clip-path: polygon(0 0, 100% 0, 0 100%, 0 100%);
+}
+
+.triangle-bottom-right {
+  clip-path: polygon(0 100%, 100% 100%, 100% 0, 0 100%);
+}
+
+// 地图功能按钮（仅图标）
+.map-icon-btn {
+  height: 48px;
+  width: 48px;
+  border: 8px solid #587C6E;
+  border-radius: 6px;
+  background: {
+    repeat: no-repeat;
+    size: 100% 100%;
+    color: #587C6E;
+  }
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+  }
+}
+
+.map-icon-btn__triangle {
+  height: 64px;
+  width: 64px;
+}

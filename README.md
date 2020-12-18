@@ -324,3 +324,19 @@ export class Xxx {
 }
 ```
 
+## 2020年12月18日
+
+### 一、css三角形裁剪
+
+```scss
+.triangle-top-left {
+	clip-path: polygon(0 0, 100% 0, 0 100%, 0 100%);
+}
+```
+
+```scss
+.triangle-bottom-right {
+  clip-path: polygon(0 100%, 100% 100%, 100% 0, 0 100%);
+}
+```
+

@@ -109,7 +109,7 @@
     position: absolute;
     @include background-config(no-repeat, center, 100% 100%);
     pointer-events: none;
-    * {
+    > * {
       pointer-events: auto;
     }
   }
