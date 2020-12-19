@@ -19,6 +19,7 @@
     "@types/arcgis-js-api": "^4.17.0",
     "@vue/compiler-sfc": "^3.0.4",
     "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.1.0",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
     "compression-webpack-plugin": "^6.1.1",
