@@ -182,3 +182,41 @@
 .legend-panel-switch__opend {
   background-image: url(./images/btn-close-legend.png);
 }
+
+.toast-panel {
+  position: fixed;
+  right: -18px;
+  bottom: 125px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  @include size-config(265.5px, 132.75px);
+  padding: 16px 72px 16px 16px;
+  color: $color-bg;
+  @include background-config(no-repeat, center, 100% 100%);
+  background-image: url(./images/toast-panel.png);
+
+  .toast-panel-title {
+    font-weight: bold;
+  }
+
+  .toast-panel-content {
+    max-height: 90px;
+    overflow: auto;
+  }
+  
+  .toast-panel-close {
+    position: absolute;
+    top: 50%;
+    right: 29px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    @include size-config(22px, 22px);
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: black;
+  }
+}

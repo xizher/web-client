@@ -4,6 +4,7 @@
       v-for="(item, index) in globeLand30Colormap"
       :key="index"
       class="legend-item"
+      @click="showToast(item.name, item.description)"
     >
       <span class="legend-item-field">{{ item.name }}：</span>
       <span
@@ -17,13 +18,15 @@
 <script>
 import { } from 'vue'
 import { webMapOptions } from '../../../config/app.conf'
+import { showToast } from '../../../ext/toast/v3'
 export default {
   name: 'Legend',
   setup() {
     const { globeLand30Colormap } = webMapOptions
 
     return {
-      globeLand30Colormap
+      globeLand30Colormap,
+      showToast,
     }
   }
 }
