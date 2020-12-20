@@ -15,11 +15,26 @@
       :class="{ 'zoom-out-rect-btn__selected': activedMapToolKey === 'zoom-out-rect' }"
       @click="zoomOutRect"
     />
+    <div
+      class="map-tools-item mark-btn map-icon-btn"
+      @click="markBarVisible = !markBarVisible"
+    />
+  </div>
+  <div
+    v-if="markBarVisible"
+    class="mark-bar"
+  >
+    <div
+      v-for="(item, index) in markEnum"
+      :key="index"
+      :class="`map-tools-item map-icon-btn ${item}-btn ${activedMapToolKey === item ? `${item}-btn__selected` : ''}`"
+      @click="drawMark(item)"
+    />
   </div>
 </template>
 
 <script>
-import { } from 'vue'
+import { ref } from 'vue'
 import { useMap } from '../../../hooks/useMap'
 export default {
   name: 'MapTools',
@@ -39,11 +54,24 @@ export default {
       activedMapToolKey.value = ''
     }
 
+    const markEnum = [
+      'draw-point', 'draw-polyline', 'draw-polygon'
+    ]
+
+    const drawMark = (type) => {
+      activedMapToolKey.value = type
+    }
+
+    const markBarVisible = ref(false)
+
     return {
       activedMapToolKey,
       zoomInRect,
       zoomOutRect,
       setDefault,
+      markBarVisible,
+      drawMark,
+      markEnum,
     }
   }
 }
@@ -55,6 +83,28 @@ export default {
   padding: 0 16px;
   display: flex;
   align-items: center;
+
+  .zoom-in-rect-btn {
+    background-image: url(./images/dark/zoom-in-rect.png);
+  }
+  .zoom-in-rect-btn__selected {
+    background-image: url(./images/light/zoom-in-rect.png);
+  }
+  .zoom-out-rect-btn {
+    background-image: url(./images/dark/zoom-out-rect.png);
+  }
+  .zoom-out-rect-btn__selected {
+    background-image: url(./images/light/zoom-out-rect.png);
+  }
+  .default-btn {
+    background-image: url(./images/dark/default.png);
+  }
+  .default-btn__selected {
+    background-image: url(./images/light/default.png);
+  }
+  .mark-btn {
+    background-image: url(./images/dark/mark.png);
+  }
 }
 .map-tools-item {
   width: 36px;
@@ -63,22 +113,44 @@ export default {
     margin-left: 8px;
   }
 }
-.zoom-in-rect-btn {
-  background-image: url(./images/dark/zoom-in-rect.png);
-}
-.zoom-in-rect-btn__selected {
-  background-image: url(./images/light/zoom-in-rect.png);
-}
-.zoom-out-rect-btn {
-  background-image: url(./images/dark/zoom-out-rect.png);
-}
-.zoom-out-rect-btn__selected {
-  background-image: url(./images/light/zoom-out-rect.png);
-}
-.default-btn {
-  background-image: url(./images/dark/default.png);
-}
-.default-btn__selected {
-  background-image: url(./images/light/default.png);
+.mark-bar {
+  position: absolute;
+  top: -54px;
+  left: 100px;
+  display: flex;
+  align-items: center;
+  height: 42px;
+  padding: 0 8px;
+  background-color: #CB7954;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -14px;
+    transform: translateX(-50%);
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-top: 14px solid #CB7954;
+  }
+
+  .draw-point-btn {
+    background-image: url(./images/dark/draw-point.png);
+  }
+  .draw-point-btn__selected {
+    background-image: url(./images/light/draw-point.png);
+  }
+  .draw-polyline-btn {
+    background-image: url(./images/dark/draw-polyline.png);
+  }
+  .draw-polyline-btn__selected {
+    background-image: url(./images/light/draw-polyline.png);
+  }
+  .draw-polygon-btn {
+    background-image: url(./images/dark/draw-polygon.png);
+  }
+  .draw-polygon-btn__selected {
+    background-image: url(./images/light/draw-polygon.png);
+  }
 }
 </style>

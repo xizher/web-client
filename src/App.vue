@@ -104,7 +104,7 @@ export default {
     window.webMap = webMap
 
     const sideVisible = ref(false)
-    const legendVisible = ref(true)
+    const legendVisible = ref(false)
     const { loaded } = webMap.useHooks()
 
     onMounted(() => {
