@@ -164,3 +164,21 @@
 .side-panel-switch__opend {
   background-image: url(./images/btn-close-side.png);
 }
+
+.legend-panel-switch {
+  position: absolute;
+  left: 50%;
+  bottom: 9px;
+  transform: translateX(-50%);
+  @include size-config(70px, 35px);
+  @include background-config(no-repeat, center, 100% 100%);
+  cursor: pointer;
+}
+
+.legend-panel-switch__closed {
+  background-image: url(./images/btn-open-legend.png);
+}
+
+.legend-panel-switch__opend {
+  background-image: url(./images/btn-close-legend.png);
+}

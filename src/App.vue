@@ -61,6 +61,16 @@
             :class="sideVisible ? 'side-panel-switch__opend' : 'side-panel-switch__closed'"
             @click="sideVisible = !sideVisible"
           />
+          <div
+            class="legend-panel-switch"
+            :class="legendVisible ? 'legend-panel-switch__opend' : 'legend-panel-switch__closed'"
+            @click="legendVisible = !legendVisible"
+          />
+          <transition name="slide-fade">
+            <div v-if="legendVisible">
+              <Legend />
+            </div>
+          </transition>
         </div>
       </div>
     </div>
@@ -75,6 +85,7 @@ import { onMounted, ref } from 'vue'
 import { WebMap } from './map/esri/mapinit/mapinit'
 import { webMapOptions } from './config/app.conf'
 import { Basemap, Hawkeye, Zoom, MapTools } from './components/map'
+import { Legend } from './components/glc30'
 import { useMap } from './hooks/useMap'
 export default {
   name: 'App',
@@ -83,8 +94,9 @@ export default {
     Hawkeye,
     Zoom,
     MapTools,
+    Legend,
   },
-  setup() {
+  setup () {
     const { setWebMap } = useMap()
 
     const webMap = new WebMap('map-view-container', webMapOptions)
@@ -92,6 +104,7 @@ export default {
     window.webMap = webMap
 
     const sideVisible = ref(false)
+    const legendVisible = ref(true)
     const { loaded } = webMap.useHooks()
 
     onMounted(() => {
@@ -100,17 +113,34 @@ export default {
 
     return {
       sideVisible,
-      loaded
+      legendVisible,
+      loaded,
     }
-  }
+  },
 }
 </script>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
 }
-.fade-enter, .fade-leave-to {
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateY(20px);
   opacity: 0;
 }
 </style>
