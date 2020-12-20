@@ -19,6 +19,10 @@
       class="map-tools-item mark-btn map-icon-btn"
       @click="markBarVisible = !markBarVisible"
     />
+    <div
+      class="map-tools-item clear-btn map-icon-btn"
+      @click="clear"
+    />
   </div>
   <div
     v-if="markBarVisible"
@@ -50,6 +54,10 @@ export default {
       activedMapToolKey.value = 'zoom-out-rect'
     }
 
+    const clear = () => {
+      activedMapToolKey.value = 'clear'
+    }
+
     const setDefault = () => {
       activedMapToolKey.value = ''
     }
@@ -72,6 +80,7 @@ export default {
       markBarVisible,
       drawMark,
       markEnum,
+      clear,
     }
   }
 }
@@ -104,6 +113,9 @@ export default {
   }
   .mark-btn {
     background-image: url(./images/dark/mark.png);
+  }
+  .clear-btn {
+    background-image: url(./images/dark/clear.png);
   }
 }
 .map-tools-item {
