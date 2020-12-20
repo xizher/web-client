@@ -55,7 +55,12 @@
           >
             <MapTools />
           </div>
-          <div class="map-bottom-right-bar map-bar" />
+          <div
+            v-if="loaded"
+            class="map-bottom-right-bar map-bar"
+          >
+            <PointerLocation />
+          </div>
           <div
             class="side-panel-switch"
             :class="sideVisible ? 'side-panel-switch__opend' : 'side-panel-switch__closed'"
@@ -84,7 +89,7 @@
 import { onMounted, ref } from 'vue'
 import { WebMap } from './map/esri/mapinit/mapinit'
 import { webMapOptions } from './config/app.conf'
-import { Basemap, Hawkeye, Zoom, MapTools } from './components/map'
+import { Basemap, Hawkeye, Zoom, MapTools, PointerLocation } from './components/map'
 import { Legend } from './components/glc30'
 import { useMap } from './hooks/useMap'
 export default {
@@ -95,6 +100,7 @@ export default {
     Zoom,
     MapTools,
     Legend,
+    PointerLocation,
   },
   setup () {
     const { setWebMap } = useMap()
