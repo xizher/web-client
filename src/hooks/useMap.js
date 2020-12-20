@@ -4,7 +4,7 @@ export function useMap () {
 
   return {
     /**
-     * @returns {import('../map/mapinit/mapinit').WebMap}
+     * @returns {import('../map/esri/mapinit/mapinit').WebMap}
      */
     getWebMap () {
       return _webMap

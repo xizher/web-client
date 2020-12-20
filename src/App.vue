@@ -49,7 +49,12 @@
             <Basemap />
             <Hawkeye />
           </div>
-          <div class="map-bottom-left-bar map-bar" />
+          <div
+            v-if="loaded"
+            class="map-bottom-left-bar map-bar"
+          >
+            <MapTools />
+          </div>
           <div class="map-bottom-right-bar map-bar" />
           <div
             class="side-panel-switch"
@@ -69,7 +74,7 @@
 import { onMounted, ref } from 'vue'
 import { WebMap } from './map/esri/mapinit/mapinit'
 import { webMapOptions } from './config/app.conf'
-import { Basemap, Hawkeye, Zoom } from './components/map'
+import { Basemap, Hawkeye, Zoom, MapTools } from './components/map'
 import { useMap } from './hooks/useMap'
 export default {
   name: 'App',
@@ -77,6 +82,7 @@ export default {
     Basemap,
     Hawkeye,
     Zoom,
+    MapTools,
   },
   setup() {
     const { setWebMap } = useMap()

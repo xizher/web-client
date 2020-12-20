@@ -3,7 +3,10 @@
     class="zoom-in-btn triangle-top-left map-icon-btn map-icon-btn__triangle"
     @click="zoomIn"
   />
-  <div class="zoom-home-btn triangle-bottom-right map-icon-btn map-icon-btn__triangle" />
+  <div
+    class="zoom-home-btn triangle-bottom-right map-icon-btn map-icon-btn__triangle"
+    @click="zoomHome"
+  />
   <div
     class="zoom-out-btn triangle-top-left map-icon-btn map-icon-btn__triangle"
     @click="zoomOut"
@@ -17,16 +20,21 @@ export default {
   name: 'Zoom',
   setup() {
     const webMap = useMap().getWebMap()
+    const { activedMapToolKey } = webMap.useHooks()
     const zoomIn = () => {
-      webMap.view.plusZoom(1)
+      activedMapToolKey.value = 'zoom-in'
     }
     const zoomOut = () => {
-      webMap.view.plusZoom(-1)
+      activedMapToolKey.value = 'zoom-out'
+    }
+    const zoomHome = () => {
+      activedMapToolKey.value = 'zoom-home'
     }
 
     return {
       zoomIn,
       zoomOut,
+      zoomHome,
     }
   }
 }
