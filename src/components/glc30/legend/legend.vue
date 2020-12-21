@@ -22,7 +22,7 @@ import { showToast } from '../../../ext/toast/v3'
 export default {
   name: 'Legend',
   setup() {
-    const { globeLand30Colormap } = webMapOptions
+    const { globeLand30Colormap } = webMapOptions.layerOperationOptions
 
     return {
       globeLand30Colormap,
