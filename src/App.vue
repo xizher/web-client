@@ -1,11 +1,6 @@
 <template>
   <div class="application-container">
-    <div class="header">
-      <div class="header-left-bar header-bar" />
-      <div class="header-right-bar header-bar">
-        <div class="vertical-bar" />
-      </div>
-    </div>
+    <AppHeader />
     <div class="content">
       <transition name="fade">
         <div
@@ -91,6 +86,7 @@ import { WebMap } from './map/esri/mapinit/mapinit'
 import { webMapOptions } from './config/app.conf'
 import { Basemap, Hawkeye, Zoom, MapTools, PointerLocation } from './components/map'
 import { Legend } from './components/glc30'
+import { AppHeader } from './components/app'
 import { useMap } from './hooks/useMap'
 export default {
   name: 'App',
@@ -101,6 +97,7 @@ export default {
     MapTools,
     Legend,
     PointerLocation,
+    AppHeader,
   },
   setup () {
     const { setWebMap } = useMap()

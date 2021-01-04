@@ -23,6 +23,9 @@
   .header-bar {
     position: absolute;
     top: 18px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     @include size-config(calc(50% - 145px), 72px);
 
     &::before {
@@ -31,6 +34,17 @@
       top: 0px;
       @include size-config(72px, 100%);
       @include background-config(no-repeat, left, auto 100%);
+    }
+
+    .theme-item {
+      margin: 0 8px;
+      font-size: 18px;
+      color: $color-bg;
+      cursor: pointer;
+
+      &:hover {
+        color: white;
+      }
     }
   }
 
