@@ -7,25 +7,7 @@
           v-show="sideVisible"
           class="side"
         >
-          <div class="side-title" />
-          <div class="side-content">
-            <a-select
-              style="width: 80%;"
-            >
-              <a-select-option value="jack">
-                自然地理环境的地域差异
-              </a-select-option>
-              <a-select-option value="lucy">
-                城市与城市化
-              </a-select-option>
-              <a-select-option value="Yiminghe">
-                区域生态环境建设
-              </a-select-option>
-              <a-select-option value="Yiminghe2">
-                区域自然资源的综合开发与利用
-              </a-select-option>
-            </a-select>
-          </div>
+          <AppSide />
         </div>
       </transition>
       <div class="main">
@@ -86,7 +68,7 @@ import { WebMap } from './map/esri/mapinit/mapinit'
 import { webMapOptions } from './config/app.conf'
 import { Basemap, Hawkeye, Zoom, MapTools, PointerLocation } from './components/map'
 import { Legend } from './components/glc30'
-import { AppHeader } from './components/app'
+import { AppHeader, AppSide } from './components/app'
 import { useMap } from './hooks/useMap'
 export default {
   name: 'App',
@@ -98,6 +80,7 @@ export default {
     Legend,
     PointerLocation,
     AppHeader,
+    AppSide,
   },
   setup () {
     const { setWebMap } = useMap()

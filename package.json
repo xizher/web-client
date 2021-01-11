@@ -9,7 +9,8 @@
     "ant-design-vue": "^2.0.0-rc.5",
     "crypto-js": "^3.3.0",
     "esri-loader": "^2.16.0",
-    "vue": "^3.0.4"
+    "vue": "^3.0.4",
+    "vue-router": "^4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
