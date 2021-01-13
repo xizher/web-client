@@ -8,10 +8,12 @@
 <script>
 import { ref } from 'vue'
 import { useMap } from '../../hooks/useMap'
+import { useZdol } from '../../hooks/useProject'
 export default {
   name: 'ZonalDifferentiationOfLongitude',
   setup() {
     const webMap = useMap().getWebMap()
+    const { setPixelData } = useZdol()
     const layer = webMap.layerOperation.findLayerByName('中国东北、华北及蒙古的部分地区')
     let pixelData = null
     let removeEvent = null
@@ -21,6 +23,7 @@ export default {
           // pixelData = layerView.pixelData.pixelBlock.mask.filter(item => item !== 255 && item !== 0).length
           // console.log(pixelData)
           pixelData = layerView.pixelData
+          setPixelData(pixelData)
           console.log(pixelData)
         }
 

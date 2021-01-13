@@ -53,6 +53,8 @@
               <Legend />
             </div>
           </transition>
+          <ZdolSlider v-if="loaded && selectedThemeUid === 2" />
+          <ZdolViewer v-if="loaded && selectedThemeUid === 2" />
         </div>
       </div>
     </div>
@@ -63,10 +65,10 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { WebMap } from './map/esri/mapinit/mapinit'
 import { webMapOptions } from './config/app.conf'
-import { Basemap, Hawkeye, Zoom, MapTools, PointerLocation } from './components/map'
+import { Basemap, Hawkeye, Zoom, MapTools, PointerLocation, ZdolSlider, ZdolViewer } from './components/map'
 import { Legend } from './components/glc30'
 import { AppHeader, AppSide } from './components/app'
 import { useMap } from './hooks/useMap'
@@ -81,6 +83,8 @@ export default {
     PointerLocation,
     AppHeader,
     AppSide,
+    ZdolSlider,
+    ZdolViewer,
   },
   setup () {
     const { setWebMap } = useMap()
@@ -91,7 +95,8 @@ export default {
 
     const sideVisible = ref(false)
     const legendVisible = ref(false)
-    const { loaded } = webMap.useHooks()
+    const { loaded, selectedThemeUid } = webMap.useHooks()
+    watch(selectedThemeUid, val => console.log(val), { immediate: true })
 
     onMounted(() => {
       webMap.load()
@@ -101,6 +106,7 @@ export default {
       sideVisible,
       legendVisible,
       loaded,
+      selectedThemeUid,
     }
   },
 }
