@@ -1,13 +1,13 @@
 <template>
   <div>
-    ZonalDifferentiationOfLongitude
+    Home
   </div>
 </template>
 
 <script>
 import { } from 'vue'
 export default {
-  name: 'ZonalDifferentiationOfLongitude',
+  name: 'Home',
   setup() {
 
     return {

@@ -33,16 +33,27 @@
 
 <script>
 import { } from 'vue'
-import { webMapOptions } from '../../../config/app.conf'
+// import { webMapOptions } from '../../../config/app.conf'
 import { useMap } from '../../../hooks/useMap'
+import { useRouter } from 'vue-router'
 export default {
   name: 'AppHeader',
   setup() {
     const { getWebMap } = useMap()
     const webMap = getWebMap()
+    const router = useRouter()
     const setTheme = uid => {
       const { selectedThemeUid } = webMap.useHooks()
       selectedThemeUid.value = uid
+      if (uid === 0) {
+        router.push('/ComprehensiveDevelopmentAndUtilizationOfRegionalNaturalEnvironment')
+      } else if (uid === 1) {
+        router.push('/CitiesAndUrbanization')
+      } else if (uid === 2) {
+        router.push('/ZonalDifferentiationOfLongitude')
+      } else if (uid === 3) {
+        router.push('/VerticalZoningDifferentiation')
+      }
     }
 
     return {
