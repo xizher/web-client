@@ -3,7 +3,6 @@
     class="zdol-slider"
     @mousewheel="mouseWheelEvent"
   >
-    <!-- <div style="display: inline-block;height: 300px;marginLeft: 70px"> -->
     <a-slider
       v-model:value="latitude"
       vertical
@@ -14,32 +13,36 @@
       :marks="marks"
       :tip-formatter="null"
     />
-    <!-- </div> -->
   </div>
 </template>
 
 <script>
-import { ref, watch } from 'vue'
+import { onUnmounted, ref, watch } from 'vue'
 import { useMap } from '../../../../hooks/useMap'
 import { esri } from '../../../../map/esri'
 import { useZdol } from '../../../../hooks/useProject'
 export default {
   name: 'ZdolSlider',
   setup() {
-    const webMap = useMap().getWebMap()
-    const { view, mapElementDisplay } = webMap
-    const layer = webMap.layerOperation.findLayerByName('中国东北、华北及蒙古的部分地区')
-    const extent = layer.fullExtent
-    const { ymin, ymax, xmin, xmax } = extent
-    const pointMin = new esri.geometry.Point({ x: xmin, y: ymin, spatialReference: view.spatialReference })
-    const minLatitude = pointMin.latitude
-    const pointMax = new esri.geometry.Point({ x: xmax, y: ymax, spatialReference: view.spatialReference })
-    const maxLatitude = pointMax.latitude
+    const { view, mapElementDisplay, layerOperation } = useMap().getWebMap()
+    const layer = layerOperation.findLayerByName('中国东北、华北及蒙古的部分地区')
+    const { ymin, ymax, xmin, xmax } = layer.fullExtent
+    const [pointMin, pointMax] = [
+      new esri.geometry.Point({ x: xmin, y: ymin, spatialReference: view.spatialReference }),
+      new esri.geometry.Point({ x: xmax, y: ymax, spatialReference: view.spatialReference })
+    ]
+    const [minLatitude, maxLatitude] = [
+      pointMin.latitude, pointMax.latitude
+    ]
     const latitude = ref((minLatitude + maxLatitude) / 2)
+
+    // 滑动条标记
     const marks = {}
     for (let i = 40; i <= 45; i++) {
       marks[i] = `${i}°N`
     }
+
+    // 通过鼠标滚动修改滑动值
     const mouseWheelEvent = event => {
       const step = 0.1
       if (event.deltaY > 0) {
@@ -54,6 +57,8 @@ export default {
         latitude.value = minLatitude
       }
     }
+
+    // 监听滑动值，并绘制值所指的经线
     watch(latitude, val => {
       const line = new esri.geometry.Polyline({
         paths: [[pointMin.longitude, val], [pointMax.longitude, val]]
@@ -71,6 +76,9 @@ export default {
       })
     }, { immediate: true })
 
+    onUnmounted(() => {
+      mapElementDisplay.clearGraphics()
+    })
 
     return {
       latitude,
@@ -95,6 +103,5 @@ export default {
   padding-right: 30px;
   border-radius: 6px;
   background-color: white;
-  // opacity: .9;
 }
 </style>

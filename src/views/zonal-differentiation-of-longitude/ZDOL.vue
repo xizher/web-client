@@ -1,59 +1,45 @@
 <template>
   <div>
-    ZonalDifferentiationOfLongitude
+    <!-- 经度地带性分异规律 -->
     <!-- <div>{{ pixelData }}</div> -->
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import { useMap } from '../../hooks/useMap'
 import { useZdol } from '../../hooks/useProject'
 export default {
   name: 'ZonalDifferentiationOfLongitude',
   setup() {
-    const webMap = useMap().getWebMap()
-    const { setPixelData } = useZdol()
-    const layer = webMap.layerOperation.findLayerByName('中国东北、华北及蒙古的部分地区')
-    let pixelData = null
-    let removeEvent = null
-    webMap.view.whenLayerView(layer).then(layerView => {
-      layerView.watch('updating', value => {
-        if (!value) {
-          // pixelData = layerView.pixelData.pixelBlock.mask.filter(item => item !== 255 && item !== 0).length
-          // console.log(pixelData)
-          pixelData = layerView.pixelData
-          setPixelData(pixelData)
-          console.log(pixelData)
+    const { view, layerOperation } = useMap().getWebMap()
+    const { setPixelData, loaded } = useZdol() // const pixelValue = pixels[reqY * width + reqX]
+    const layer = layerOperation.findLayerByName('中国东北、华北及蒙古的部分地区')
+    let removeStopPanEvent, removeStopZoomEvent, removeWatchEvent
+
+    // 获取栅格像元矩阵
+    view.whenLayerView(layer).then(layerView => {
+      removeWatchEvent = layerView.watch('updating', updating => {
+        if (updating) {
+          loaded.value = false
+        } else {
+          setPixelData(layerView.pixelData)
         }
-
-        if (removeEvent) {
-          removeEvent.remove()
-        }
-
-        removeEvent = webMap.view.on('click', event => {
-          const currentExtent = pixelData.extent
-          const pixelBlock = pixelData.pixelBlock
-          const height = pixelBlock.height
-          const width = pixelBlock.width
-
-          const pixelSizeX = Math.abs(currentExtent.xmax - currentExtent.xmin) / width
-
-          const point = webMap.view.toMap({
-            x: event.x,
-            y: event.y
-          })
-
-          const reqX = Math.ceil(event.x)
-          const reqY = Math.ceil(event.y)
-
-          const pixels = pixelBlock.pixels[0]
-          const pixelValue = pixels[reqY * width + reqX]
-
-          console.log(reqX, reqY, pixelValue, pixelSizeX)
-        })
       })
     })
+
+    onMounted(() => {
+      removeStopPanEvent = view.on('drag', event => event.stopPropagation())
+      removeStopZoomEvent = view.on('mouse-wheel', event => event.stopPropagation())
+    })
+
+    // 清理监听事件
+    onUnmounted(() => {
+      removeStopPanEvent && removeStopPanEvent.remove()
+      removeStopZoomEvent && removeStopZoomEvent.remove()
+      removeWatchEvent && removeWatchEvent.remove()
+    })
+
     return {
     }
   }
