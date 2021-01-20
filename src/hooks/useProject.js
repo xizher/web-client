@@ -42,7 +42,7 @@ export function useVzd () {
   /**
    * @param { 'GLC' | 'DEM' } type
    */
-  const getPixelData = type => vzd.pixelData[type]
+  const getPixelData = type => vzd.pixelData[type.toUpperCase()]
 
   function setPixelData ({ glc, dem }) {
     vzd.pixelData.DEM = dem

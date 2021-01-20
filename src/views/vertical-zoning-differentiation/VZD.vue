@@ -1,6 +1,6 @@
 <template>
   <div>
-    VerticalZoningDifferentiation
+    <VzdProfile />
   </div>
 </template>
 
@@ -9,8 +9,12 @@ import { watchEffect } from 'vue'
 import { useMap } from '../../hooks/useMap'
 import { usePixelData, useViewOn } from '../../hooks/useEsri'
 import { useVzd } from '../../hooks/useProject'
+import { VzdProfile } from '../../components/map'
 export default {
   name: 'VerticalZoningDifferentiation',
+  components: {
+    VzdProfile
+  },
   setup() {
     const { layerOperation } = useMap().getWebMap()
     const layerDEM = layerOperation.findLayerByName('乞力马扎罗数字高程模型')
@@ -45,7 +49,7 @@ export default {
       }
     })
 
-    useViewOn('drag', e => e.stopPropagation())
+    // useViewOn('drag', e => e.stopPropagation())
     useViewOn('mouse-wheel', e => e.stopPropagation())
 
 
