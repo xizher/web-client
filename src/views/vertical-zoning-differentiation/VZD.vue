@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div style="height: 100%">
+    <VzdSurface />
     <VzdProfile />
   </div>
 </template>
@@ -9,11 +10,12 @@ import { watchEffect } from 'vue'
 import { useMap } from '../../hooks/useMap'
 import { usePixelData, useViewOn } from '../../hooks/useEsri'
 import { useVzd } from '../../hooks/useProject'
-import { VzdProfile } from '../../components/map'
+import { VzdProfile, VzdSurface } from '../../components/map'
 export default {
   name: 'VerticalZoningDifferentiation',
   components: {
-    VzdProfile
+    VzdProfile,
+    VzdSurface,
   },
   setup() {
     const { layerOperation } = useMap().getWebMap()
