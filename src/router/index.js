@@ -13,7 +13,22 @@ const routes = [
   }, {
     path: '/CitiesAndUrbanization',
     name: 'CitiesAndUrbanization',
-    component: () => import('../views/cities-and-urbanization/CAU.vue')
+    component: () => import('../views/cities-and-urbanization/CAU.vue'),
+    children: [
+      {
+        path: '/CitiesAndUrbanization/statistics',
+        name: 'Statistics',
+        component: () => import('../views/cities-and-urbanization/children/Statistics.vue')
+      }, {
+        path: '/CitiesAndUrbanization/splitscreen',
+        name: 'SplitScreen',
+        component: () => import('../views/cities-and-urbanization/children/SplitScreen.vue')
+      }, {
+        path: '/CitiesAndUrbanization/slide',
+        name: 'Slide',
+        component: () => import('../views/cities-and-urbanization/children/Slide.vue')
+      }
+    ]
   }, {
     path: '/ZonalDifferentiationOfLongitude',
     name: 'ZonalDifferentiationOfLongitude',

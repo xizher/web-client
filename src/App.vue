@@ -12,7 +12,28 @@
       </transition>
       <div class="main">
         <div class="map-panel">
-          <div id="map-view-container" />
+          <div style="display: flex">
+            <div
+              id="map-view-container"
+              :style="{
+                height: '100%', width: isSplitSceen ? '33.3%' : '100%'
+              }"
+            />
+            <div
+              v-show="isSplitSceen"
+              id="map-view-container2"
+              :style="{
+                height: '100%', width: '33.3%'
+              }"
+            />
+            <div
+              v-show="isSplitSceen"
+              id="map-view-container3"
+              :style="{
+                height: '100%', width: '33.3%'
+              }"
+            />
+          </div>
           <div
             v-if="loaded"
             class="map-top-left-bar map-bar"
@@ -65,13 +86,14 @@
 </template>
 
 <script>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch, watchEffect } from 'vue'
 import { WebMap } from './map/esri/mapinit/mapinit'
 import { webMapOptions } from './config/app.conf'
 import { Basemap, Hawkeye, Zoom, MapTools, PointerLocation, ZdolSlider, ZdolViewer } from './components/map'
 import { Legend } from './components/glc30'
 import { AppHeader, AppSide } from './components/app'
 import { useMap } from './hooks/useMap'
+import { useCAU } from './hooks/useProject'
 export default {
   name: 'App',
   components: {
@@ -102,11 +124,18 @@ export default {
       webMap.load()
     })
 
+    const { isSplitSceen } = useCAU()
+    watchEffect(() => {
+      console.log(isSplitSceen.value)
+    })
+
+
     return {
       sideVisible,
       legendVisible,
       loaded,
       selectedThemeUid,
+      isSplitSceen,
     }
   },
 }
